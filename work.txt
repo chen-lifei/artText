@@ -1,0 +1,27 @@
+http://jenkins.500ding.me/jenkins/
+chenlifei
+clf12345678Abc
+
+richText.js line355：
+// 获取到的颜色等信息，需要的是item里面的span标签的样式
+                        if(item.childNodes && item.childNodes[0].nodeName.toLowerCase() === 'span') {
+                            let innerObj = getCall(item.childNodes[0]);
+                            innerObj.align = obj.align;
+                            obj = innerObj;
+                        }
+
+下拉框页面上滑问题：
+formatBar:
+line1236:
+if(type) {
+                $('body, html').animate({
+                    scrollTop: $('.animation-panel').offset().top
+                }, 500);
+            };
+line957:
+toggleTest() {
+            $('body, html').animate({
+                scrollTop: $('.text-panel').offset().top
+            });
+        },
+
