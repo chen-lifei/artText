@@ -1,0 +1,22 @@
+http://jenkins.500ding.me/jenkins/
+chenlifei
+clf12345678Abc
+
+时间转化问题
+timeStampTransform(stamp, useH, hasMillisecond) {
+		let format = ["00", "00", "00"];
+		let ms = '00';
+		if (!isNaN(stamp)) {
+			let s = Math.floor(stamp / 1000);
+			let h = String(Math.floor(s / 3600)).padStart(2, "0");
+			let m = String(Math.floor(Math.floor(s % 3600) / 60)).padStart(2, "0");
+			s = String(s % 60).padStart(2, "0");
+			format = [h, m, s];
+			ms = String(Math.floor(stamp % 1000)) > 100 ? String(Math.floor(stamp % 1000)) : String(Math.floor(stamp % 1000)).padStart(3, "0");
+			ms = ms.substr(0, 2);
+            if (!useH && h === '00') {
+                format.shift();
+            }
+		}
+		return hasMillisecond ? format.join(":") + '.' + ms : format.join(":");
+	},
