@@ -2,21 +2,25 @@ http://jenkins.500ding.me/jenkins/
 chenlifei
 clf12345678Abc
 
-时间转化问题
-timeStampTransform(stamp, useH, hasMillisecond) {
-		let format = ["00", "00", "00"];
-		let ms = '00';
-		if (!isNaN(stamp)) {
-			let s = Math.floor(stamp / 1000);
-			let h = String(Math.floor(s / 3600)).padStart(2, "0");
-			let m = String(Math.floor(Math.floor(s % 3600) / 60)).padStart(2, "0");
-			s = String(s % 60).padStart(2, "0");
-			format = [h, m, s];
-			ms = String(Math.floor(stamp % 1000)) > 100 ? String(Math.floor(stamp % 1000)) : String(Math.floor(stamp % 1000)).padStart(3, "0");
-			ms = ms.substr(0, 2);
-            if (!useH && h === '00') {
-                format.shift();
-            }
-		}
-		return hasMillisecond ? format.join(":") + '.' + ms : format.join(":");
-	},
+撤销git add操作：git reset HEAD filename
+
+获取图片的原始宽高：
+let img = new Image();
+img.src = 'https://www.....';
+img.onload = function() { console.log(img.naturalWidth, img.naturalHeight) };
+
+jquery对象转dom:
+1. 使用jquery提供的get方法来访问jquery对象中相关的dom节点  $('.div').get(0)
+
+获取元素和页面顶部之间的距离：$('.ele').offset().top
+
+正则匹配中文：/^[\u4e00-\u9fa50-9]+$/g
+正则匹配英文：/^[a-zA-Z0-9]+$/g
+正则提取链接：/(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|\&|-)+)/g
+正则提取数字部分：/[^0-9.]/ig    =>    str.replace(/[^0-9.]/ig, '');
+
+// 阻止离开页面弹框出现
+$(window).unbind('beforeunload');
+window.onbeforeunload = null;
+
+
