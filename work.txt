@@ -23,4 +23,37 @@ jquery对象转dom:
 $(window).unbind('beforeunload');
 window.onbeforeunload = null;
 
+jQuery的:visible选择器：$(.box :visible) => 选择全部可见的 .box 元素；$(.box:visible) => 选择可见的 .box 元素。
 
+获取光标所在区域的元素信息：
+①
+let elementContent = window.getSelection();
+if (elementContent .anchorNode) {
+            elementContent= elementContent.getRangeAt(0).endContainer.parentElement;
+}
+②
+let elementContent = window.getSelection().anchorNode;
+if (elementContent && elementContent.nodeName === '#text') {
+            elementContent = elementContent.parentNode;
+}
+
+克隆节点：node.cloneNode(deep)
+deep为true: 克隆节点及其属性，以及后代；deep为false: 克隆节点和后代
+
+
+for (var i = 0; i < item.childNodes.length; i++) {
+                                let oStroke = getCall(item.childNodes[i]);
+                                if (oStroke.strokeWidth) {
+                                    obj.strokeColor = oStroke.strokeColor;
+                                    obj.strokeWidth = oStroke.strokeWidth;
+                                    break;
+                                }
+                            }
+
+item.childNodes.forEach(inner => {
+                            if (inner.nodeType === 1) {
+                                let innerObj = getCall(inner);
+                                innerObj.align = obj.align;
+                                obj = innerObj;
+                            }
+                        });
