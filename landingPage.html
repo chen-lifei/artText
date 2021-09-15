@@ -1,13 +1,20 @@
-<template>
-    <div class="view-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="view-container flex">
         <div class="left-container">
             <div class="tool-bar">
-                <div></div>
-                <div></div>
+                <div class="tool" v-for="(item, index) in selectList" :key="index">
+                    <base-icon :class="item.icon" :size="20"></base-icon>
+                </div>
             </div>
             <div class="left-content">
-                <div class="first"></div>
-                <div class="second"></div>
             </div>
         </div>
         <div class="right-container">
@@ -21,6 +28,18 @@
                     <p class="info"><span>与迦剪一起 </span>创造非凡</p>
                     <p>极其简单的视频创作工具，三分钟轻松上手</p>
                 </div>
+                <div class="button-group flex">
+                    <div class="upload flex">
+                        上传您的视频
+                        <base-icon class="iconfangxiangjiantou" :size="14"></base-icon>
+                        <span></span>
+                        <div class="template" @click="toTemplate">通过模板创建</div>
+                    </div>
+                    <div class="case flex" @click="toEditor">
+                        体验案例
+                        <base-icon class="iconqianwangyemian"></base-icon>
+                    </div>
+                </div>
             </div>
             <div class="footer">
                 <img src="@/assets/images/logo/logo-gray.png" alt="">
@@ -28,7 +47,8 @@
             </div>
         </div>
     </div>
-</template>
+</body>
+</html>
 
 <script>
 /**
@@ -36,6 +56,18 @@
  */
 export default {
     name: "Index",
+    data() {
+        return {
+            selectList: [
+                { value: 'view', icon: 'iconluzhi' },
+                { value: 'edit', icon: 'icongongzuo' },
+                { value: 'material', icon: 'iconlvjing2' },
+                { value: 'tool', icon: 'iconlvjing' },
+                { value: 'save', icon: 'iconyunchucun' },
+                { value: 'product', icon: 'iconshuiyinfangwei' },
+            ]
+        }
+    },
     methods: {
         // 登录注册弹窗
         openLoginModal(type) {
@@ -48,21 +80,32 @@ export default {
                 that.$login("accountRegister", () => {});
             }
         },
+        toEditor() {
+            this.commonMixinToEditor({
+                preset: baseConfig.ProjectSizeTemplate[0].key,
+            });
+        },
+        toTemplate() {
+            this.$router.push({ path: '/template' });
+        }
     },
 };
 </script>
 
 <style lang="less" scoped>
+.shadow {
+    box-shadow: 1px 1px 2px #121316, -1px -1px 2px #383a40;
+}
 .view-container {
-    display: flex;
     justify-content: space-between;
     width: 100%;
     height: 100%;
+    min-width: 1920px;
     background-color: #242529;
     padding: 30px;
     .left-container {
         position: relative;
-        min-width: 1280px;
+        width: 1280px;
         height: 100%;
         border-radius: 10px;
         background-color: #000000;
@@ -70,13 +113,18 @@ export default {
             position: absolute;
             top: 10px;
             left: 20px;
-            div {
+            .tool {
                 width: 36px;
                 height: 36px;
                 margin-top: 10px;
                 border-radius: 5px;
                 cursor: pointer;
                 background-color: #303135;
+                text-align: center;
+                line-height: 36px;
+                .base-icon {
+                    color: #ffffff;
+                }
             }
         }
         .left-content {
@@ -86,9 +134,11 @@ export default {
     }
     .right-container {
         position: relative;
-        min-width: 640px;
+        width: 580px;
+        height: 100%;
         .header {
-            text-align: right;
+            position: absolute;
+            right: 0;
             .login,
             .signup {
                 display: inline-block;
@@ -104,23 +154,91 @@ export default {
             }
             .signup {
                 padding: 8px 22px;
-                box-shadow: 1px 1px 2px #121316, -1px -1px 2px #383a40;
+                .shadow();
                 background-color: #f7335f;
             }
         }
         .right-content {
+            position: absolute;
+            top: 50%;
+            left: 0;
             width: 100%;
             height: auto;
             text-align: center;
-            margin: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateY(-50%);
             .slogan {
-                margin: 100px 0;
+                margin: 100px 0 80px 0;
+                letter-spacing: 2px;
                 .info {
                     font-size: 48px;
                     font-weight: 200;
+                    color: #ffffff;
+                    font-family: PingFangSC, PingFangSC-Semibold;
                     span {
                         font-weight: bold;
+                    }
+                }
+                p {
+                    font-size: 18px;
+                    color: #949496;
+                    margin-top: 20px;
+                }
+            }
+            .button-group {
+                div {
+                    position: relative;
+                    .shadow();
+                    border-radius: 26px;
+                    color: #949496;
+                    cursor: pointer;
+                    transition: all .2s;
+                    background-color: #303135;
+                    .base-icon {
+                        position: absolute;
+                        right: 29px;
+                        vertical-align: middle;
+                        transition: all .2s;
+                    }
+                    &:hover {
+                        color: #FFFFFF;
+                    }
+                }
+                .upload {
+                    position: relative;
+                    color: #000000;
+                    margin-right: 10px;
+                    padding: 16px 66px 16px 30px;
+                    background-color: var(--mainColor);
+                    .base-icon {
+                        transform: rotate(-90deg);
+                    }
+                    .template {
+                        position: absolute;
+                        display: none;
+                        top: calc(100% + 10px);
+                        left: 0;
+                        padding: 16px 48px;
+                    }
+                    span {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        width: 100%;
+                        height: 10px;
+                    }
+                    &:hover {
+                        .base-icon {
+                            transform: rotate(0);
+                        }
+                        .template {
+                            display: inline-block;
+                        }
+                    }
+                }
+                .case {
+                    padding: 16px 84px 16px 40px;
+                    .base-icon {
+                        right: 43px;
                     }
                 }
             }
