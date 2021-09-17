@@ -33,6 +33,7 @@
         .section {
             width: 80%;
             height: 80%;
+            overflow: hidden;
             margin: auto;
         }
 
@@ -56,14 +57,12 @@
             background-color: palegoldenrod;
         }
 
-        @keyframes show1 {
+        @keyframes show {
             0% {
-                opacity: 0;
                 transform: translateY(60px);
             }
 
             100% {
-                opacity: 1;
                 transform: translateY(0);
             }
         }
@@ -79,189 +78,80 @@
                 transform: translateY(0);
             }
         }
-    </style>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            border: none;
-        }
 
-        .Bl {
-            width: 600px;
-            height: 540px;
-            margin: 0 auto;
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .Bl>input {
-            width: 20%;
-            height: 40px;
+        .slide-right-enter-active,
+        .slide-right-leave-active,
+        .slide-left-enter-active,
+        .slide-left-leave-active {
+            will-change: transform;
+            transition: all .5s;
             position: absolute;
-            cursor: pointer;
+        }
+
+        .slide-right-enter {
             opacity: 0;
+            transform: translateX(-100%);
         }
 
-        .Bl input:nth-of-type(1) {
-            left: 0%;
+        .slide-right-leave-active {
+            opacity: 0;
+            transform: translateX(100%);
         }
 
-        .Bl input:nth-of-type(2) {
-            left: 20%;
+        .slide-left-enter {
+            opacity: 0;
+            transform: translateX(100%);
         }
 
-        .Bl input:nth-of-type(3) {
-            left: 40%;
-        }
-
-        .Bl input:nth-of-type(4) {
-            left: 60%;
-        }
-
-        .Bl input:nth-of-type(5) {
-            left: 80%;
-        }
-
-        /*切换效果*/
-        .Bl input:nth-of-type(1):checked~span:nth-of-type(1) {
-            color: white;
-        }
-
-        /* ~ 选择兄弟元素 */
-        .Bl input:nth-of-type(2):checked~span:nth-of-type(2) {
-            color: white;
-        }
-
-        .Bl input:nth-of-type(3):checked~span:nth-of-type(3) {
-            color: white;
-        }
-
-        .Bl input:nth-of-type(4):checked~span:nth-of-type(4) {
-            color: white;
-        }
-
-        .Bl input:nth-of-type(5):checked~span:nth-of-type(5) {
-            color: white;
-        }
-
-        .Bl input:nth-of-type(1):checked~.pagebox>.pages {}
-
-        .Bl input:nth-of-type(2):checked~.pagebox>.pages {
-            transform: translateY(-100%);
-        }
-
-        .Bl input:nth-of-type(3):checked~.pagebox>.pages {
-            transform: translateY(-200%);
-        }
-
-        .Bl input:nth-of-type(4):checked~.pagebox>.pages {
-            transform: translateY(-300%);
-        }
-
-        .Bl input:nth-of-type(5):checked~.pagebox>.pages {
-            transform: translateY(-400%);
-        }
-
-        span {
-            display: block;
-            width: 20%;
-            height: 40px;
-            background-color: red;
-            float: left;
-            text-align: center;
-            line-height: 40px;
-            font-size: 20px;
-        }
-
-        .pagebox,
-        .pages {
-            width: 100%;
-            height: 500px;
-        }
-
-        .pagebox {
-            overflow: hidden;
-        }
-
-        .pages {
-            transition: all 0.5s;
-        }
-
-        .page {
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            font-family: "微软雅黑";
-            font-size: 30px;
-            line-height: 500px;
-            color: white;
-        }
-
-        .page1 {
-            background-color: pink;
-        }
-
-        .page2 {
-            background-color: blue;
-        }
-
-        .page3 {
-            background-color: red;
-        }
-
-        .page4 {
-            background-color: green;
-        }
-
-        .page5 {
-            background-color: black;
+        .slide-left-leave-active {
+            opacity: 0;
+            transform: translateX(-100%);
         }
     </style>
 </head>
 
 <body>
-    <div class="Bl">
-        <input type="radio" name="btn" checked><span>1</span>
-        <input type="radio" name="btn"><span>2</span>
-        <input type="radio" name="btn"><span>3</span>
-        <input type="radio" name="btn"><span>4</span>
-        <input type="radio" name="btn"><span>5</span>
-        <section class="pagebox">
-            <div class="pages">
-                <div class="page page1">This is page1</div>
-                <div class="page page2">This is page2</div>
-                <div class="page page3">This is page3</div>
-                <div class="page page4">This is page4</div>
-                <div class="page page5">This is page5</div>
-            </div>
-        </section>
-    </div>
-
-    <!-- <div id="app">
+    <div id="app">
         <div class="view-container">
             <div class="toolbar">
                 <div class="tool" v-for="(item, index) in 5" @click="changeSelect(index)"></div>
             </div>
-            <div class="section a" v-if="currentSelect === 0"></div>
+            <transition name="slide-right">
+                <div class="section a" v-if="currentSelect === 0"></div>
+            </transition>
+            <transition name="slide-right">
+                <div class="section b" v-if="currentSelect === 1"></div>
+            </transition>
+            <transition name="slide-right">
+                <div class="section c" v-if="currentSelect === 2"></div>
+
+            </transition>
+            <transition name="slide-right">
+                <div class="section d" v-if="currentSelect === 3"></div>
+
+            </transition>
+            <transition name="slide-right">
+                <div class="section e" v-if="currentSelect === 4"></div>
+            </transition>
+            <!-- <div class="section a" v-if="currentSelect === 0"></div>
             <div class="section b" v-if="currentSelect === 1"></div>
             <div class="section c" v-if="currentSelect === 2"></div>
             <div class="section d" v-if="currentSelect === 3"></div>
-            <div class="section e" v-if="currentSelect === 4"></div>
+            <div class="section e" v-if="currentSelect === 4"></div> -->
         </div>
-    </div> -->
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script>
         var vm = new Vue({
             el: '#app',
             data: {
-                currentSelect: 0
+                currentSelect: 0,
+                show: true
             },
             watch: {
                 currentSelect(newVal, oldVal) {
-                    let section = document.querySelector('.section');
+                    /* let section = document.querySelector('.section');
                     // console.log(section);
                     if (!section) return;
                     if (newVal - oldVal > 0) {
@@ -270,7 +160,7 @@
                     } else {
                         console.log('下');
                         section.style.animation = 'show2 .3s ease-in-out forwards';
-                    }
+                    } */
                 }
             },
             methods: {
