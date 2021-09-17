@@ -40,6 +40,12 @@ if (elementContent && elementContent.nodeName === '#text') {
 克隆节点：node.cloneNode(deep)
 deep为true: 克隆节点及其属性，以及后代；deep为false: 克隆节点和后代
 
+vue数据绑定image的src时，需要使用require: <img :src="require(`@/assets/images/indexView/${thirdPageSelect.value}.png`)" alt=""> 或者在定义数组时，list: { ..., url: require('@/assets/images/indexView/template.png') }... <img :src="list.url">
+
+@/：webpack/build/webpack.base.conf.js中配置的路径别名
+~@/：~ 代表根目录，~@即根目录下的配置为@的路径
+
+设置背景模糊，字体不会被影响：backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 
 for (var i = 0; i < item.childNodes.length; i++) {
                                 let oStroke = getCall(item.childNodes[i]);
