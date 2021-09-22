@@ -67,15 +67,19 @@
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script>
-        let test = document.querySelector('.test');
-        console.log(getComputedStyle(test));
+        function getImage(img) {
+            return new Promise(resolve => {
+                let image = new Image();
+                image.src = img;
+                image.onload = function() {
+                    let res = image.naturalWidth / image.naturalHeight;
+                    resolve(res);
+                }
+            })
+        }
 
-        (function () {
-            console.log(5566);
-            let test = document.querySelector(`img`);
-            test.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.artdesign.org.cn%2FUpload%2Farticle%2F20210823%2F53752-d7e963290d9ada7393c92f5de9092e90.jpeg&refer=http%3A%2F%2Fwww.artdesign.org.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1634190602&t=6089c71f8c28e780bd9517bc61bb3798';
-            console.log(test);
-        })();
+        let image = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.artdesign.org.cn%2FUpload%2Farticle%2F20210823%2F53752-d7e963290d9ada7393c92f5de9092e90.jpeg&refer=http%3A%2F%2Fwww.artdesign.org.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1634190602&t=6089c71f8c28e780bd9517bc61bb3798';
+        getImage(image).then(res => console.log(res));
     </script>
 </body>
 
