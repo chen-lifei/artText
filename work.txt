@@ -47,6 +47,20 @@ vue数据绑定image的src时，需要使用require: <img :src="require(`@/asset
 
 设置背景模糊，字体不会被影响：backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 
+vue的transition标签使用先渐隐后渐显的动画：
+.fade-enter-active, .fade-leave-active {
+    transition: all 2s;
+}
+.fade-enter {
+    opacity: 0;
+}
+.fade-enter-to {
+    opacity: 1;
+}
+.fade-leave-active {
+    display: none;
+}
+
 for (var i = 0; i < item.childNodes.length; i++) {
                                 let oStroke = getCall(item.childNodes[i]);
                                 if (oStroke.strokeWidth) {
