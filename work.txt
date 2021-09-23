@@ -2,6 +2,8 @@ http://jenkins.500ding.me/jenkins/
 chenlifei
 clf12345678Abc
 
+https://tower.im/teams/912256/todos/8309/
+
 撤销git add操作：git reset HEAD filename
 
 获取图片的原始宽高：
