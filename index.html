@@ -107,6 +107,12 @@
             opacity: 0;
             transform: translateX(-100%);
         }
+        .div2 {
+            display: none;
+        }
+        .div1:hover +.div2 {
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -138,6 +144,9 @@
             <div class="section c" v-if="currentSelect === 2"></div>
             <div class="section d" v-if="currentSelect === 3"></div>
             <div class="section e" v-if="currentSelect === 4"></div> -->
+
+            <div class="div1">55333</div>
+            <div class="div2">55333</div>
         </div>
     </div>
 
