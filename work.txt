@@ -2,6 +2,10 @@ http://jenkins.500ding.me/jenkins/
 chenlifei
 clf12345678Abc
 
+迦剪管理中心：
+chenlifei/clf12345678
+
+
 撤销git add操作：git reset HEAD filename
 
 获取图片的原始宽高：
