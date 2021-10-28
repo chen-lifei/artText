@@ -65,3 +65,8 @@ vue的transition标签使用先渐隐后渐显的动画：
     display: none;
 }
 
+
+
+文档观察者
+
+vue的观察 observer??
