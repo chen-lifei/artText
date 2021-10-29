@@ -66,6 +66,23 @@ vue的transition标签使用先渐隐后渐显的动画：
 }
 
 
+projectsView
+<p>快捷创建入口</p>
+        <div class="quick-create flex">
+            <div class="wide" @click="createBySize(projectSize[0])">
+                16:9
+            </div>
+            <div class="clip" @click="createBySize(projectSize[1])">
+                9:16
+            </div>
+            <div class="equal" @click="createBySize(projectSize[3])">1:1</div>
+        </div>
+
+createBySize(item) {
+            this.commonMixinToEditor({ query: { preset: item.key } });
+        },
+
+
 
 文档观察者
 

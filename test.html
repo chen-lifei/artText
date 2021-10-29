@@ -9,69 +9,13 @@
 </head>
 
 <body">
-    <svg class="svg-content" width="61.8888" height="51.9242" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" overflow="visible">
-        <g class="svg-scale" transform="scale(0.2768, 0.2779)">
-            <path
-                d=" M158.322 15.07 C220.082 15.07 245.242 118.46 111.782 170.62 C-21.698 118.43 3.462 15.07 65.232 15.07 C79.322 15.07 95.322 20.46 111.782 33.07 C128.242 20.47 144.232 15.07 158.322 15.07 M158.322 0 C142.982 0 127.072 5.05 111.782 14.7 C96.482 5.05 80.572 0 65.232 0 C33.062 0 7.362 21.66 1.232 53.91 C-5.978 92.43 17.122 149.82 106.292 184.66 L111.782 186.8 L117.262 184.66 C206.382 149.83 229.522 92.46 222.262 53.91 C216.182 21.67 190.492 0 158.322 0Z"
-                stroke="" stroke-width="0.5" stroke-dasharray="" stroke-linecap="butt" stroke-linejoin="miter"
-                stroke-miterlimit="4" stroke-style="0" fill="#500200" vector-effect="non-scaling-stroke"></path>
-        </g>
-    </svg>
-
-    <svg class="svg-content" width="57.7952" height="47.2111" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" overflow="visible">
-        <g class="svg-scale" transform="scale(0.2773, 0.2758)">
-            <path
-                d=" M101.465 170.1 C16.635 136.94 -5.605 83.48 1.125 47.77 C6.515 19.2 29.235 0 57.665 0 C72.895 0 88.895 5.58 104.215 16.2 C119.525 5.58 135.525 0 150.755 0 C179.185 0 201.905 19.19 207.285 47.77 C214.015 83.48 191.775 136.95 106.955 170.1 L104.215 171.17Z"
-                stroke="" stroke-width="0.5" stroke-dasharray="" stroke-linecap="butt" stroke-linejoin="miter"
-                stroke-miterlimit="4" stroke-style="0" fill="#e50012" vector-effect="non-scaling-stroke"></path>
-        </g>
-    </svg>
-
-    <svg class="svg-content" width="548.6509" height="133.931" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" overflow="visible">
-        <g class="svg-scale" transform="scale(0.2821, 0.28)">
-            <path
-                d=" M239.12 478.24 C107.28 478.24 0 370.97 0 239.12 S107.28 0 239.12 0 H1705.49 C1837.34 0 1944.61 107.27 1944.61 239.12 S1837.34 478.24 1705.49 478.24Z"
-                stroke="" stroke-width="0.5" stroke-dasharray="" stroke-linecap="butt" stroke-linejoin="miter"
-                stroke-miterlimit="4" stroke-style="0" fill="#e50012" vector-effect="non-scaling-stroke"></path>
-        </g>
-    </svg>
+    
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
     <script>
-        function utf8Decode(inputStr) {
-            var outputStr = "";
-            var code1, code2, code3, code4;
-            console.log('input', inputStr);
-
-            for (var i = 0; i < inputStr.length; i++) {
-                code1 = inputStr.charCodeAt(i);
-                if (code1 < 128) {
-                    outputStr += String.fromCharCode(code1);
-                }
-                else if (code1 < 224) {
-                    code2 = inputStr.charCodeAt(++i);
-                    outputStr += String.fromCharCode(((code1 & 31) << 6) | (code2 & 63));
-                }
-                else if (code1 < 240) {
-                    code2 = inputStr.charCodeAt(++i);
-                    code3 = inputStr.charCodeAt(++i);
-                    outputStr += String.fromCharCode(((code1 & 15) << 12) | ((code2 & 63) << 6) | (code3 & 63));
-                }
-                else {
-                    code2 = inputStr.charCodeAt(++i);
-                    code3 = inputStr.charCodeAt(++i);
-                    code4 = inputStr.charCodeAt(++i);
-                    outputStr += String.fromCharCode(((code1 & 7) << 18) | ((code2 & 63) << 12) | ((code3 & 63) << 6) | (code2 & 63));
-                }
-            }
-            console.log(outputStr);
-            return outputStr;
-        }
-        console.log(utf8Decode('plum++yan+'));
+        
     </script>
     </body>
 
