@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .drag {
+            position: relative;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 200px;
+            background-color: plum;
+            margin-bottom: 200px;
+        }
+
+        .draggable {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            background: palegoldenrod;
+        }
+
+        .dropzone {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            margin-right: 50px;
+            background: plum;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<div>
+    <div id="app">
+        <!-- <div class="drag" v-drag></div> -->
+
+        <div class="dropzone">
+            <div class="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)">
+                This div is draggable
+            </div>
+        </div>
+        <div class="dropzone"></div>
+        <div class="dropzone"></div>
+        <div class="dropzone"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                dragged: null,
+            },
+            watch: {
+            },
+            mounted() {
+                /* 拖动目标元素时触发drag事件 */
+                document.addEventListener("drag", function (event) {
+
+                }, false);
+
+                document.addEventListener("dragstart", function (event) {
+                    // 保存拖动元素的引用(ref.)
+                    dragged = event.target;
+                    // 使其半透明
+                    event.target.style.opacity = .5;
+                }, false);
+
+                document.addEventListener("dragend", function (event) {
+                    // 重置透明度
+                    event.target.style.opacity = "";
+                }, false);
+
+                /* 放置目标元素时触发事件 */
+                document.addEventListener("dragover", function (event) {
+                    // 阻止默认动作以启用drop
+                    event.preventDefault();
+                }, false);
+
+                document.addEventListener("dragenter", function (event) {
+                    // 当可拖动的元素进入可放置的目标时高亮目标节点
+                    if (event.target.className == "dropzone") {
+                        event.target.style.background = "purple";
+                    }
+
+                }, false);
+
+                document.addEventListener("dragleave", function (event) {
+                    // 当拖动元素离开可放置目标节点，重置其背景
+                    if (event.target.className == "dropzone") {
+                        event.target.style.background = "";
+                    }
+
+                }, false);
+
+                document.addEventListener("drop", function (event) {
+                    // 阻止默认动作（如打开一些元素的链接）
+                    event.preventDefault();
+                    // 将拖动的元素到所选择的放置目标节点中
+                    if (event.target.className == "dropzone") {
+                        event.target.style.background = "";
+                        dragged.parentNode.removeChild(dragged);
+                        event.target.appendChild(dragged);
+                    }
+
+                }, false);
+            },
+            methods: {
+            },
+            directives: {
+                drag: {
+                    bind: function (el) {
+                        let odiv = el;
+                        odiv.onmousedown = (e) => {
+                            //算出鼠标相对元素的位置
+                            let disX = e.clientX - odiv.offsetLeft;
+                            let disY = e.clientY - odiv.offsetTop;
+
+                            document.onmousemove = (e) => {
+                                //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+                                let left = e.clientX - disX;
+                                let top = e.clientY - disY;
+
+                                //绑定元素位置到positionX和positionY上面
+                                this.positionX = top;
+                                this.positionY = left;
+
+                                //移动当前元素
+                                odiv.style.left = left + 'px';
+                                odiv.style.top = top + 'px';
+                            };
+                            document.onmouseup = (e) => {
+                                document.onmousemove = null;
+                                document.onmouseup = null;
+                            };
+                        };
+                    }
+                }
+            }
+        });
+    </script>
+    </body>
+
+</html>
