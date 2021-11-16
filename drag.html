@@ -115,17 +115,18 @@
                 let draggingEle;
                 let dragId, isFolder;
                 document.addEventListener('mousedown', (event) => {
-                    event.stopPropagation();
                     let parent = $(event.target).parents('.project-card');
-                    console.log('start', parent);
                     
                     if (parent.length) {
                         dragging = event.target;
                         dragId = parent.attr('data-id');
                         isFolder = parent.attr('data-folder');
                         console.log(dragId, isFolder);
+                        setTimeout(() => {
+                            console.log(dragging);
+                        }, 200);
+                        return;
                         let img;
-                        
                         if (parent.get(0).hasAttribute('data-folder')) {
                             img = parent.find('.folder img').clone();
                         } else {
@@ -140,23 +141,24 @@
                         draggingEle.style.height = '100px';
                         draggingEle.style.objectFit = 'cover';
                         draggingEle.style.zIndex = '99';
-                    }
-                    if (this.isBatching) {
-                        event.target.classList.add('multiple_drag_start');
-                        setTimeout(() => {
+                        draggingEle.style.borderRadius = '5px';
+                        draggingEle.style.border = '1px dashed #0fcdcf';
+                        
+                        if (this.isBatching) {
+                            event.target.classList.add('multiple_drag_start');
                             this.selectListId.forEach(item => {
                                 $(`.project-card[data-id=${item}] .project-grid-container`).addClass('drag');
                             });
-                        }, 0);
+                        }
                     }
                 }, false);
 
                 document.addEventListener('mouseup', (event) => {
+                    dragging = null;
                     if(draggingEle) {
                         document.body.removeChild(draggingEle);
                         draggingEle = null;
                         $(`.project-card[data-id=${dragId}]`).removeClass('drag');
-                        dragging = null;
                     };
                     setTimeout(() => {
                         if (this.isBatching) {
@@ -165,7 +167,7 @@
                                 $(`.project-card[data-id=${item}] .project-grid-container`).removeClass('drag');
                             });
                         }
-                        if (folderNode && folderNode.length) folderNode.get(0).classList.remove('enter-folder');
+                        // if (folderNode && folderNode.length) folderNode.get(0).classList.remove('enter-folder');
                     }, 20);
                 }, false);
 
