@@ -33,6 +33,57 @@
             background: plum;
             padding: 10px;
         }
+
+        .drag-image {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            z-index: 10;
+        }
+
+        .multiple_drag_start::before {
+            content: '';
+            z-index: 0;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            height: 100px;
+            border: 1px dashed var(--mainColor);
+        }
+
+        .project-grid-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            background-color: #E3E6EC;
+            border: 1px dashed #D6D8DD;
+            z-index: 10;
+        }
+        
+        .enter-folder {
+            padding: 10px 0;
+            border: 1px dashed #0EC5C7;
+            background-color: rgba(14, 197, 199, 0.1);
+        }
+
+        .enter-folder img {
+            display: block;
+            width: 90% !important;
+            height: 159px !important;
+            margin: auto;
+        }
+
+        .enter-folder .folder-bottom {
+            width: 90% !important;
+            height: 78px !important;
+            margin: auto;
+        }
     </style>
 </head>
 
@@ -60,55 +111,74 @@
             watch: {
             },
             mounted() {
-                /* 拖动目标元素时触发drag事件 */
-                document.addEventListener("drag", function (event) {
-
+                let dragging;
+                let draggingEle;
+                let dragId, isFolder;
+                document.addEventListener('mousedown', (event) => {
+                    event.stopPropagation();
+                    let parent = $(event.target).parents('.project-card');
+                    console.log('start', parent);
+                    
+                    if (parent.length) {
+                        dragging = event.target;
+                        dragId = parent.attr('data-id');
+                        isFolder = parent.attr('data-folder');
+                        console.log(dragId, isFolder);
+                        let img;
+                        
+                        if (parent.get(0).hasAttribute('data-folder')) {
+                            img = parent.find('.folder img').clone();
+                        } else {
+                            img = parent.find('.cover-wrapper img').clone();
+                        }
+                        parent.addClass('drag');
+                        draggingEle = img.get(0);
+                        
+                        document.body.appendChild(draggingEle);
+                        draggingEle.style.position = 'absolute';
+                        draggingEle.style.width = '150px';
+                        draggingEle.style.height = '100px';
+                        draggingEle.style.objectFit = 'cover';
+                        draggingEle.style.zIndex = '99';
+                    }
+                    if (this.isBatching) {
+                        event.target.classList.add('multiple_drag_start');
+                        setTimeout(() => {
+                            this.selectListId.forEach(item => {
+                                $(`.project-card[data-id=${item}] .project-grid-container`).addClass('drag');
+                            });
+                        }, 0);
+                    }
                 }, false);
 
-                document.addEventListener("dragstart", function (event) {
-                    // 保存拖动元素的引用(ref.)
-                    dragged = event.target;
-                    // 使其半透明
-                    event.target.style.opacity = .5;
+                document.addEventListener('mouseup', (event) => {
+                    if(draggingEle) {
+                        document.body.removeChild(draggingEle);
+                        draggingEle = null;
+                        $(`.project-card[data-id=${dragId}]`).removeClass('drag');
+                        dragging = null;
+                    };
+                    setTimeout(() => {
+                        if (this.isBatching) {
+                            event.target.classList.remove('multiple_drag_start');
+                            this.selectListId.forEach(item => {
+                                $(`.project-card[data-id=${item}] .project-grid-container`).removeClass('drag');
+                            });
+                        }
+                        if (folderNode && folderNode.length) folderNode.get(0).classList.remove('enter-folder');
+                    }, 20);
                 }, false);
 
-                document.addEventListener("dragend", function (event) {
-                    // 重置透明度
-                    event.target.style.opacity = "";
-                }, false);
-
-                /* 放置目标元素时触发事件 */
-                document.addEventListener("dragover", function (event) {
-                    // 阻止默认动作以启用drop
+                document.addEventListener('mousemove', (event) => {
                     event.preventDefault();
-                }, false);
-
-                document.addEventListener("dragenter", function (event) {
-                    // 当可拖动的元素进入可放置的目标时高亮目标节点
-                    if (event.target.className == "dropzone") {
-                        event.target.style.background = "purple";
+                    if (dragging && draggingEle) {
+                        draggingEle.style.left = event.x + 'px';
+                        draggingEle.style.top = event.y + 'px';
                     }
-
                 }, false);
 
-                document.addEventListener("dragleave", function (event) {
-                    // 当拖动元素离开可放置目标节点，重置其背景
-                    if (event.target.className == "dropzone") {
-                        event.target.style.background = "";
-                    }
-
-                }, false);
-
-                document.addEventListener("drop", function (event) {
-                    // 阻止默认动作（如打开一些元素的链接）
+                document.addEventListener('mouseenter', (event) => {
                     event.preventDefault();
-                    // 将拖动的元素到所选择的放置目标节点中
-                    if (event.target.className == "dropzone") {
-                        event.target.style.background = "";
-                        dragged.parentNode.removeChild(dragged);
-                        event.target.appendChild(dragged);
-                    }
-
                 }, false);
             },
             methods: {
@@ -144,6 +214,33 @@
                 }
             }
         });
+    </script>
+    <script>
+        function dragstart_handler(ev) {
+            console.log("dragStart: dropEffect = " + ev.dataTransfer.dropEffect + " ; effectAllowed = " + ev.dataTransfer.effectAllowed);
+
+            // Add this element's id to the drag payload so the drop handler will
+            // know which element to add to its tree
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.dataTransfer.effectAllowed = "move";
+        }
+
+        function drop_handler(ev) {
+            console.log("drop: dropEffect = " + ev.dataTransfer.dropEffect + " ; effectAllowed = " + ev.dataTransfer.effectAllowed);
+            ev.preventDefault();
+
+            // Get the id of the target and add the moved element to the target's DOM
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+        function dragover_handler(ev) {
+            console.log("dragOver: dropEffect = " + ev.dataTransfer.dropEffect + " ; effectAllowed = " + ev.dataTransfer.effectAllowed);
+            ev.preventDefault();
+            // Set the dropEffect to move
+            ev.dataTransfer.dropEffect = "move"
+        }
+
     </script>
     </body>
 

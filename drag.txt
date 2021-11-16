@@ -1,0 +1,90 @@
+document.addEventListener('drag', (event) => {
+        }, false);
+
+        document.addEventListener('dragstart', (event) => {
+            // event.preventDefault();
+            console.log(event);
+            console.log('start');
+            dragged = event.target;
+            $(dragged).css({
+                position: 'relative',
+                left: event.offsetX - 30,
+                top: event.offsetY - 50
+            });
+            event.target.classList.add('drag_start');
+            if (this.isBatching) {
+                event.target.classList.add('multiple_drag_start');
+                setTimeout(() => {
+                    this.selectListId.forEach(item => {
+                        $(`.project-card[data-id=${item}] .project-grid-container`).addClass('drag');
+                    });
+                }, 0);
+                
+            }
+            setTimeout(() => {
+                event.target.classList.add('drag');
+            }, 0)
+        }, false);
+
+        document.addEventListener('dragend', (event) => {
+            console.log('end');
+            setTimeout(() => {
+                event.target.classList.remove('drag_start');
+                event.target.classList.remove('drag');
+                $(dragged).css({
+                    position: 'relative',
+                    left: 0,
+                    top: 0
+                });
+                if (this.isBatching) {
+                    event.target.classList.remove('multiple_drag_start');
+                    this.selectListId.forEach(item => {
+                        $(`.project-card[data-id=${item}] .project-grid-container`).removeClass('drag');
+                    });
+                }
+                if(folderNode && folderNode.length) folderNode.get(0).classList.remove('enter-folder');
+            }, 20);
+        }, false);
+
+        /* 放置目标元素时触发事件 */
+        document.addEventListener('dragover', (event) => {
+            // 阻止默认动作以启用drop
+            event.preventDefault();
+            dragged.classList.add('drag');
+        }, false);
+
+        document.addEventListener('dragenter', (event) => {
+            let parent = $(event.target).parents('.folder');
+            // 可拖动的元素进入了可放置的目标
+            if (parent.length) {
+                parent.get(0).classList.add('enter-folder');
+            }
+        }, false);
+
+        document.addEventListener('dragleave', (event) => {
+            // 拖动元素离开可放置目标节点，清除样式
+            let parent = $(event.target).parents('.folder');
+            if (parent.length) {
+                parent.get(0).classList.remove('enter-folder');
+            }
+        }, false);
+
+        document.addEventListener('drop', (event) => {
+            console.log('drop');
+            event.preventDefault();
+            // 将拖动的元素放到所选择的可放置目标节点中
+            folderNode = $(event.target).parents('.folder');
+            
+            if (folderNode.length) {
+                let data;
+                let targetCardNode = folderNode.parents('.project-card').get(0);
+                let dragCardNode = $(dragged).parents('.project-card').get(0);
+
+                data = {
+                    targetId: targetCardNode.getAttribute('data-id'),
+                    dragId: dragCardNode.getAttribute('data-id'),
+                    isFolder: dragCardNode.getAttribute('data-folder')
+                };
+                this.move(data);
+            }
+        }, false);
