@@ -22,11 +22,34 @@
             background-color: pink;
             z-index: 10;
         }
+        .video-wrapper {
+            width: 284px;
+            height: 169px;
+            border: 1px solid plum;
+            border-radius: 5px 5px 0 0;
+            background-color: var(--upperColor);
+        }
+        .project-video {
+            width: auto;
+            height: 100%;
+            object-fit: fill;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 
 <body">
     <a href="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4" download="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4">download</a>
+
+    <div class="video-wrapper">
+        <video src="https://fileprocut.woodo.cn/upload/project/202111/19/uuid44be08f04ff88e9d9415290330c4.mp4" loop autoplay class="project-video"></video>
+    </div>
+    <div class="video-wrapper">
+        <video src="https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4" loop autoplay class="project-video"></video>
+    </div>
+    <img width="200" height="200" src="" alt="">
+
     <div id="app">
         <div class="draggable">
             <div class="inner"  data-drag="true"></div>
