@@ -36,6 +36,35 @@
             margin-left: 50%;
             transform: translateX(-50%);
         }
+        .fish {
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+        }
+        .icon {
+            width: 18px;
+            height: 18px;
+            border: 1px solid plum;
+            border-radius: 50%;
+            position: relative;
+        }
+        .icon::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            width: 8px;
+            border-top: 2px solid;
+        }
+        .icon::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            height: 8px;
+            border-left: 2px solid;
+        }
     </style>
 </head>
 
@@ -43,10 +72,10 @@
     <a href="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4" download="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4">download</a>
 
     <div class="video-wrapper">
-        <video src="https://fileprocut.woodo.cn/upload/project/202111/19/uuid44be08f04ff88e9d9415290330c4.mp4" loop autoplay class="project-video"></video>
+        <!-- <video src="https://fileprocut.woodo.cn/upload/project/202111/19/uuid44be08f04ff88e9d9415290330c4.mp4" loop autoplay class="project-video"></video> -->
     </div>
     <div class="video-wrapper">
-        <video src="https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4" loop autoplay class="project-video"></video>
+        <!-- <video src="https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4" loop autoplay class="project-video"></video> -->
     </div>
     <img width="200" height="200" src="" alt="">
 
@@ -62,100 +91,48 @@
         </div>
     </div>
 
+    <!-- <div id="jsi-flying-fish-container" class="fish container"><canvas width="1616" height="157"></canvas></div> -->
+
+    <div class="icon"></div>
+
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
-    <script>
-        let dragging;
-        let tLeft, tTop;
-        document.addEventListener('mousedown', (event) => {
-            console.log('start', event.target.hasAttribute('data-drag'));
-            
-            if (event.target.hasAttribute('data-drag')) {
-                dragging = event.target;
-                console.log(dragging);
-                console.log(event.clientX, event.clientY);
-                // let moveElemRect = dragging.getBoundingClientRect();
-                tLeft = event.clientX;
-                tTop = event.clientY;
-                console.log(tLeft, tTop);
-            }
-            /* if (this.isBatching) {
-                event.target.classList.add('multiple_drag_start');
-                setTimeout(() => {
-                    this.selectListId.forEach(item => {
-                        $(`.project-card[data-id=${item}] .project-grid-container`).addClass('drag');
-                    });
-                }, 0);
-            } */
-        }, false);
+    <script src="https://blog-static.cnblogs.com/files/elkyo/fish.js"></script>
 
-        document.addEventListener('mouseup', (event) => {
-            console.log('end');
-            dragging.style.left = 0;
-            dragging.style.top = 0;
-            dragging = null;
-            /* setTimeout(() => {
-                event.target.classList.remove('drag_start');
-                event.target.classList.remove('drag');
-                $(dragged).css({
-                    position: 'relative',
-                    left: 0,
-                    top: 0
-                });
-                if (this.isBatching) {
-                    event.target.classList.remove('multiple_drag_start');
-                    this.selectListId.forEach(item => {
-                        $(`.project-card[data-id=${item}] .project-grid-container`).removeClass('drag');
-                    });
+    <script>
+        downLoadByUrl('https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4');
+        function downLoadByUrl(url) {
+            var xhr = new XMLHttpRequest();
+            //GET请求,请求路径url,async(是否异步)
+            xhr.open('GET', url);
+            //设置请求头参数的方式,如果没有可忽略此行代码
+            // xhr.setRequestHeader("token", token);
+            //设置响应类型为 blob
+            xhr.responseType = 'blob';
+            //关键部分
+            xhr.onload = function (e) {
+                console.log(this);
+                //如果请求执行成功
+                if (this.status == 200) {
+                    var blob = this.response;
+                    var filename = "test.mp4";
+                    var a = document.createElement('a');
+
+                    blob.type = "application/octet-stream";
+                    //创键临时url对象
+                    var url = URL.createObjectURL(blob);
+
+                    a.href = url;
+                    a.download = filename;
+                    a.click();
+                    //释放之前创建的URL对象
+                    window.URL.revokeObjectURL(url);
                 }
-                if (folderNode && folderNode.length) folderNode.get(0).classList.remove('enter-folder');
-            }, 20); */
-        }, false);
-
-        document.addEventListener('mousemove', (event) => {
-            event.preventDefault();
-            if (dragging) {
-                var moveX = event.clientX - tLeft,
-                    moveY = event.clientY - tTop;
-                console.log(moveX);
-                dragging.style.left = moveX + 'px';
-                dragging.style.top = moveY + 'px';
-            }
-        }, false);
-
-        document.addEventListener('mouseenter', (event) => {
-            event.preventDefault();
-        }, false);
-
-        document.addEventListener('dragover', (event) => {
-            console.log('dragover');
-        });
-
-        /* document.addEventListener('drop', (event) => {
-            console.log('drop');
-            event.preventDefault();
-            // 将拖动的元素放到所选择的可放置目标节点中
-            folderNode = $(event.target).parents('.folder');
-
-            if (folderNode.length) {
-                let data;
-                let targetCardNode = folderNode.parents('.project-card').get(0);
-                let dragCardNode = $(dragged).parents('.project-card').get(0);
-
-                data = {
-                    targetId: targetCardNode.getAttribute('data-id'),
-                    dragId: dragCardNode.getAttribute('data-id'),
-                    isFolder: dragCardNode.getAttribute('data-folder')
-                };
-                this.move(data);
-            }
-        }, false); */
-    </script>
-
-    <script>
-        document.addEventListener('click', () => console.log('click'));
-        document.addEventListener('mousedown', () => console.log('mousedown'));
+            };
+            //发送请求
+            xhr.send();
+    }
     </script>
     </body>
 
