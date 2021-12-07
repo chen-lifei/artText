@@ -65,6 +65,14 @@
             height: 8px;
             border-left: 2px solid;
         }
+        .test {
+            width: 200px;
+            height: 200px;
+            background-color: plum;
+        }
+        .dragging {
+            cursor: grabbing;
+        }
     </style>
 </head>
 
@@ -90,6 +98,8 @@
             <div class="inner" data-drag="true"></div>
         </div>
     </div>
+
+    <div class="test"></div>
 
     <!-- <div id="jsi-flying-fish-container" class="fish container"><canvas width="1616" height="157"></canvas></div> -->
 
@@ -133,6 +143,17 @@
             //发送请求
             xhr.send();
     }
+    </script>
+
+    <script>
+        let test = document.querySelector('.test');
+        test.addEventListener('mousedown', event => {
+            event.preventDefault();
+            console.log('22')
+            if (event.button === 2) {
+                test.classList.add('dragging');
+            }
+        })
     </script>
     </body>
 

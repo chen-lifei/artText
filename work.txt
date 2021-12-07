@@ -89,56 +89,24 @@ createBySize(item) {
 vue的观察 observer??
 
 
-<template v-if="projectShowType === 'grid'">
-                        <base-list
-                            scroll=".project-card-container"
-                            :list="documentList"
-                            :card-width="280"
-                            :card-height="240"
-                            :card-offset-y="30"
-                            @scrollLoad="loadMore"
-                        >
-                            <template #default="{ item }">
-                                <project-card
-                                    :data-drag="true"
-                                    :data-id="item.id"
-                                    :data-folder="item.hasOwnProperty('grade') ? true : false"
-                                    :batch="isBatching"
-                                    :type="currentNav"
-                                    :show-type="projectShowType"
-                                    :project-info="item"
-                                    @selectProject="selectProject"
-                                    @updateProject="updateProject"
-                                    @deleteFolder="deleteFolder"
-                                    @updateRecycle="updateRecycle"
-                                    @enterFolder="enterFolder(item)">
-                                </project-card>
-                            </template>
-                        </base-list>
-                    </template>
-                    <template v-else>
-                        <base-list
-                            type="common"
-                            scroll=".project-card-container"
-                            :list="documentList"
-                            :card-width="1250"
-                            :card-height="72"
-                            @scrollLoad="loadMore"
-                        >
-                            <template #default="{ item }">
-                                <project-card
-                                    :data-id="item.id"
-                                    :data-folder="item.hasOwnProperty('grade') ? true : false"
-                                    :batch="isBatching"
-                                    :type="currentNav"
-                                    :show-type="projectShowType"
-                                    :project-info="item"
-                                    @selectProject="selectProject"
-                                    @updateProject="updateProject"
-                                    @deleteFolder="deleteFolder"
-                                    @updateRecycle="updateRecycle"
-                                    @enterFolder="enterFolder(item)">
-                                </project-card>
-                            </template>
-                        </base-list>
-                    </template>
+editorview
+line 3412
+setTimeout(() => {
+                    $('#editor-wrap').addClass('editor-grabbing');
+                    this.$forceUpdate();
+                }, 0);
+
+$('#editor-wrap').removeClass('editor-grabbing');
+
+line 5179:
+.editor-grabbing {
+            cursor: grabbing !important;
+        }
+        .editor-grabbing .editor-page * {
+            pointer-events: none !important;
+        }
+
+project:
+line539: 
+
+line1206:
