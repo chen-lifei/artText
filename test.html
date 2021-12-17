@@ -7,103 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .draggable {
-            position: relative;
-            display: inline-block;
-            margin-right: 30px;
-            width: 200px;
-            height: 200px;
-            background: plum;
-        }
-        .inner {
-            position:absolute;
-            width: 100%;
-            height: 100%;
-            background-color: pink;
-            z-index: 10;
-        }
-        .video-wrapper {
-            width: 284px;
-            height: 169px;
-            border: 1px solid plum;
-            border-radius: 5px 5px 0 0;
-            background-color: var(--upperColor);
-        }
-        .project-video {
-            width: auto;
-            height: 100%;
-            object-fit: fill;
-            margin-left: 50%;
-            transform: translateX(-50%);
-        }
-        .fish {
-            position: fixed;
-            width: 100%;
-            left: 0;
-            bottom: 0;
-        }
-        .icon {
-            width: 18px;
-            height: 18px;
-            border: 1px solid plum;
-            border-radius: 50%;
-            position: relative;
-        }
-        .icon::before {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 8px;
-            width: 8px;
-            border-top: 2px solid;
-        }
-        .icon::after {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 5px;
-            height: 8px;
-            border-left: 2px solid;
-        }
-        .test {
-            width: 200px;
-            height: 200px;
-            background-color: plum;
-        }
-        .dragging {
-            cursor: grabbing;
-        }
+        
     </style>
 </head>
 
 <body">
-    <a href="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4" download="https://fileprocut.woodo.cn/upload/image/202110/27/uuid64591e59800506b862d8da4b0637.mp4">download</a>
-
-    <div class="video-wrapper">
-        <!-- <video src="https://fileprocut.woodo.cn/upload/project/202111/19/uuid44be08f04ff88e9d9415290330c4.mp4" loop autoplay class="project-video"></video> -->
-    </div>
-    <div class="video-wrapper">
-        <!-- <video src="https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4" loop autoplay class="project-video"></video> -->
-    </div>
-    <img width="200" height="200" src="" alt="">
-
-    <div id="app">
-        <div class="draggable">
-            <div class="inner"  data-drag="true"></div>
-        </div>
-        <div class="draggable">
-            <div class="inner" data-drag="true"></div>
-        </div>
-        <div class="draggable">
-            <div class="inner" data-drag="true"></div>
-        </div>
-    </div>
-
-    <div class="test"></div>
-
     <!-- <div id="jsi-flying-fish-container" class="fish container"><canvas width="1616" height="157"></canvas></div> -->
 
-    <div class="icon"></div>
+    <canvas id="canvas" width="260" height="40"></canvas>
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -111,50 +22,21 @@
     <script src="https://blog-static.cnblogs.com/files/elkyo/fish.js"></script>
 
     <script>
-        downLoadByUrl('https://fileprocut.woodo.cn/upload/image/202111/15/uuidbd06b49315533cbc776d2100705f.mp4');
-        function downLoadByUrl(url) {
-            var xhr = new XMLHttpRequest();
-            //GET请求,请求路径url,async(是否异步)
-            xhr.open('GET', url);
-            //设置请求头参数的方式,如果没有可忽略此行代码
-            // xhr.setRequestHeader("token", token);
-            //设置响应类型为 blob
-            xhr.responseType = 'blob';
-            //关键部分
-            xhr.onload = function (e) {
-                console.log(this);
-                //如果请求执行成功
-                if (this.status == 200) {
-                    var blob = this.response;
-                    var filename = "test.mp4";
-                    var a = document.createElement('a');
-
-                    blob.type = "application/octet-stream";
-                    //创键临时url对象
-                    var url = URL.createObjectURL(blob);
-
-                    a.href = url;
-                    a.download = filename;
-                    a.click();
-                    //释放之前创建的URL对象
-                    window.URL.revokeObjectURL(url);
-                }
-            };
-            //发送请求
-            xhr.send();
-    }
-    </script>
-
-    <script>
-        let test = document.querySelector('.test');
-        test.addEventListener('mousedown', event => {
-            event.preventDefault();
-            console.log('22')
-            if (event.button === 2) {
-                test.classList.add('dragging');
-            }
-        })
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.fillStyle = 'plum';
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(25, 10, 10, 35, 50, 40);
+        ctx.moveTo(50, 40);
+        ctx.lineTo(210, 40);
+        ctx.lineTo(260, 0);
+        ctx.lineTo(0, 0);
+        ctx.moveTo(210, 40);
+        ctx.bezierCurveTo(240, 35, 225, 10, 260, 0);
+        ctx.moveTo(260, 0);
+        ctx.lineTo(0, 0);
+        ctx.fill();
     </script>
     </body>
-
 </html>
