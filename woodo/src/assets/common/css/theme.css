@@ -1,0 +1,34 @@
+/* 暗黑主题 */
+[data-theme="dark"] {
+    /* 背景颜色 */
+    --backColor: var(--darkColor);
+    /* 字体颜色 */
+    --textColor: #ffffff;
+    /* 次要字体颜色 */
+    --dimColor: #949496;
+    /* 强调字体颜色 */
+    --stressColor: #ffffff;
+    /* 浮窗、弹层、弹窗颜色 */
+    --upperColor: #303135;
+    /* 边框颜色 */
+    --borderColor: #3e3f42;
+    /* 反色 */
+    --antiColor: var(--lightColor);
+}
+/* 高亮主题： 默认 */
+[data-theme="light"] {
+    /* 背景颜色 */
+    --backColor: var(--lightColor);
+    /* 字体颜色 */
+    --textColor: #5f6063;
+    /* 次要字体颜色 */
+    --dimColor: #949496;
+    /* 强调字体颜色 */
+    --stressColor: #242529;
+    /* 浮窗、弹层、弹窗颜色 */
+    --upperColor: #ffffff;
+    /* 边框颜色 */
+    --borderColor: #d6d8dd;
+    /* 反色 */
+    --antiColor: var(--darkColor);
+}

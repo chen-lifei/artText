@@ -1,0 +1,4 @@
+defaults.url=https://log.woodo.cn/
+defaults.org=sentry
+defaults.project=woodo
+auth.token=1f3df9ea71de46df9bacbfcdc7b6d914466dab71ed8a49dda0fcd7d152c53b2e

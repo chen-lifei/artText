@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        
+        body {
+            background-color: #f6f6f9;
+        }
     </style>
 </head>
 
@@ -22,21 +24,31 @@
     <script src="https://blog-static.cnblogs.com/files/elkyo/fish.js"></script>
 
     <script>
-        var canvas = document.getElementById('canvas');
-        var ctx = canvas.getContext('2d');
-        ctx.beginPath();
-        ctx.fillStyle = 'plum';
-        ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(25, 10, 10, 35, 50, 40);
-        ctx.moveTo(50, 40);
-        ctx.lineTo(210, 40);
-        ctx.lineTo(260, 0);
-        ctx.lineTo(0, 0);
-        ctx.moveTo(210, 40);
-        ctx.bezierCurveTo(240, 35, 225, 10, 260, 0);
-        ctx.moveTo(260, 0);
-        ctx.lineTo(0, 0);
-        ctx.fill();
+        function drawCanvas(theme) {
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            ctx.beginPath();
+            ctx.fillStyle = theme === 'light' ? '#FFFFFF' : '#303135';
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(25, 10, 10, 35, 50, 40);
+            ctx.moveTo(50, 40);
+            ctx.lineTo(210, 40);
+            ctx.lineTo(260, 0);
+            ctx.lineTo(0, 0);
+            ctx.moveTo(210, 40);
+            ctx.bezierCurveTo(240, 35, 225, 10, 260, 0);
+            ctx.moveTo(260, 0);
+            ctx.lineTo(0, 0);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        drawCanvas('light');
+
+        setTimeout(() => {
+            console.log('2s后');
+            drawCanvas('dark');
+        }, 2000);
     </script>
     </body>
 </html>

@@ -1,0 +1,72 @@
+@media only screen and (min-width:400px){html{font-size:21.33px!important}}
+@media only screen and (min-width:414px){html{font-size:1.38pc!important}}
+@media only screen and (min-width:480px){html{font-size:1.6pc!important}}
+*{box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -webkit-tap-highlight-color:rgba(0,0,0,0); -webkit-tap-highlight-color:transparent; outline:none;}
+html,body{margin:0 auto; width:100%; height:100%; max-width:750px; font-size:20px; font-family:'Helvetica';}
+body{color:#666; background-color:#fff; font-size:0.7rem;}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section {display: block;}
+h1,h2,h3,h4,h5,h6,p,dfn,figure,form,blockquote {margin: 0;font-weight: normal;}
+ul,ol,li,dl,dd {margin: 0;padding: 0;list-style: none;}
+td,th {padding: 0;}
+table {border-collapse: collapse;border-spacing: 0;}
+a {text-decoration: none; color: inherit; cursor: inherit;}
+/* 输入框样式 */
+textarea,input,button,a,div[contenteditable]{border:0; margin:0; padding:0;cursor:pointer; -webkit-appearance:none; -moz-appearance:none;}
+iframe{border: none;}
+button{display:inline-block; text-align:center; border:0; color:var(--mainColor); font-size:0.7rem; font-family:inherit; border-radius:4px;}
+
+div[contenteditable]:empty:before{content:attr(data-placeholder); color:#a4a2a2; transition:all 0.4s;}
+div[contenteditable]:focus:before{content:none; transition:all 0.4s;}
+
+input[type=text]:focus, input[type=password]:focus, textarea:focus{-webkit-box-shadow:0 0 0 1000px white inset;}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{-webkit-box-shadow:0 0 0 1000px white inset; color:#8f8f8f;}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{color:#a4a2a2 ;}
+#app{width:100%; height:100%;}
+.left{float:left;}
+.right{float:right;}
+
+/* 渐隐渐显动画 */
+.modal_fade-enter,.modal_fade-leave-active {opacity:0;}
+.modal_fade-enter-active,.modal_fade-leave-active {transition:opacity .5s ease}
+.modal-fade-enter,.modal-fade-leave-active {opacity:0;}
+.modal-fade-enter-active,.modal-fade-leave-active {transition:opacity .5s ease}
+.modal-slide-enter-active,.modal-slide-leave-active {transition:all .6s;}
+.modal-slide-enter,.modal-slide-leave-to{transform:translateX(-100%);}
+.modal-slide-down-enter-active,.modal-slide-down-leave-active {transition:all .3s;}
+.modal-slide-down-enter,.modal-slide-down-leave-to{transform:translateY(100%);}
+
+.modal-backdrop{z-index:900; position:fixed; top:0; right:0; bottom:0; left:0; overflow:auto; margin:0; background:rgba(0,0,0,0.6);}
+.modal-backdrop.bg-transparent{background:transparent;}
+.modal-backdrop.zindex-2{z-index:10;}
+.modal{position:absolute; top:50%; left:50%; right:0; width:86%; overflow:hidden; margin:auto; background:#fff; border-radius: 0.2rem; box-shadow:0 5px 30px 0 rgba(0,0,0,0.2); font-size:0.75rem; transform: translate(-50%, -50%);}
+.modal .modal-header,
+.modal .modal-body,
+.modal .modal-footer{position:relative; padding:0 1rem 0.5rem;}
+.modal .modal-header{min-height:2rem; padding:0.75rem 1.2rem;}
+.modal .modal-body{min-height:4rem; overflow:hidden;}
+.modal .modal-footer{text-align:right; padding-bottom:1rem;}
+.modal .modal-title{display:block; font-size:0.85rem; color:#666;}
+.modal .modal-close{position:absolute; top:0.75rem; right:0.75rem; width:1rem; height:1rem; background-color: transparent; transition:all .4s;}
+.modal .modal-close::before,
+.modal .modal-close::after{content:""; position:absolute; left:0; top:0.45rem; width:100%; height:0.1rem; background-color:#737373;}
+.modal .modal-close::before{transform:rotate(45deg);}
+.modal .modal-close::after{transform:rotate(-45deg);}
+.modal .modal-footer .button{display:inline-block; margin:0 0.5rem; padding:0.3rem 0.75rem; background:#3694ce; border-radius: 0.2rem; font-size:0.75rem; color:#fff; cursor:pointer;}
+.modal .modal-footer .button:last-child{margin-right:0;}
+.modal .modal-footer .button-cancel{background:#fff; border:1px solid #e5e5e5; color:#636363;}
+
+/* 邮箱发送邮件弹框 */
+.email_send{position:fixed; top:0; left:0; z-index:10; width:100%; height:100%; background-color:rgba(0, 0, 0, .5);}
+.email_send .modal_content{position:absolute; top:50%; left:50%; width:14.75rem; height:10.5rem; margin:-5.25rem 0 0 -7.375rem; padding:1.75rem 0 1.375rem; background-color:#ffffff; border-radius:0.15rem;}
+.email_send .modal_content h1{display:block; margin-bottom:1.15rem; text-align:center; color:#2d2d2d; font-size:0.6rem; font-weight:500;}
+.email_send .modal_content p{display:block; margin-bottom:2rem; text-align:center; color:var(--mainColor); font-size:0.6rem;}
+.email_send .modal_content button{width:5rem; height:1.75rem; line-height:1.75rem; opacity:1 !important; background-color:var(--mainColor); border-radius:4px; font-size:0.7rem; color:#fff;}
+
+/* 通用弹框 */
+.common_doc_modal{position:fixed; top:0; left:0; z-index:11; width:100%; height:100%; text-align:center; background:rgba(0, 0, 0, .5);}
+.common_doc_modal .modal_contain{ margin:0 auto; background:#fff; border-radius:0.5rem;}
+
+/*消息中心样式*/
+.setting_contain .list_h li a{color:var(--mainColor); text-decoration:underline;}
+
+

@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+.idea
+*.iml
+/logs/
+*.sublime-project
+*.sublime-workspace
+/src/assets/pc/images/edit/sprite/sprites.css
+/src/assets/pc/images/edit/sprite/sprites.png

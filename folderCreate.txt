@@ -1,0 +1,25 @@
+import Vue from 'vue';
+import FolderCreate from './FolderCreate.vue';
+
+let folderCreateConstructor = Vue.extend(FolderCreate);
+let isOpen = false;
+
+export default function (parentFolder) {
+    if (isOpen) return;
+    isOpen = true;
+    let instance = new folderCreateConstructor();
+    let destroy = function() {
+        isOpen = false;
+        document.body.removeChild(instance.$el);
+        instance.$destroy();
+    }
+    instance.parentFolder = parentFolder;
+    instance.$once(`close`, () => {
+        destroy();
+    });
+    instance.$once(`success`, () => {
+        destroy();
+    });
+    instance.$mount();
+    document.body.appendChild(instance.$el);
+}
