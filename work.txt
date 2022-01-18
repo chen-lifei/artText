@@ -5,7 +5,6 @@ clf12345678Abc
 迦剪管理中心：
 chenlifei/clf12345678
 
-
 撤销git add操作：git reset HEAD filename
 
 获取图片的原始宽高：
@@ -66,47 +65,40 @@ vue的transition标签使用先渐隐后渐显的动画：
 }
 
 
-projectsView
-<p>快捷创建入口</p>
-        <div class="quick-create flex">
-            <div class="wide" @click="createBySize(projectSize[0])">
-                16:9
-            </div>
-            <div class="clip" @click="createBySize(projectSize[1])">
-                9:16
-            </div>
-            <div class="equal" @click="createBySize(projectSize[3])">1:1</div>
-        </div>
-
-createBySize(item) {
-            this.commonMixinToEditor({ query: { preset: item.key } });
-        },
-
-
-
 文档观察者
-
 vue的观察 observer??
 
+common.js
+import Axios from 'axios';
 
-editorview
-line 3412
-setTimeout(() => {
-                    $('#editor-wrap').addClass('editor-grabbing');
-                    this.$forceUpdate();
-                }, 0);
+import_pdf(that, formData, success, fail, getProgress, cancelImport) ..
 
-$('#editor-wrap').removeClass('editor-grabbing');
+const CancelToken = Axios.CancelToken;
+that.$axios({
+                                            method: 'post',
+                                            url: '/api/member/document/import_pdf/',
+                                            data: {
+                                                fileName: result.fileName,
+                                                downMsg: result.downMsg,
+                                                docId: _doc_id
+                                            },
+                                            cancelToken: new CancelToken(c => {
+                                                if (typeof cancelImport === 'function') cancelImport(c);
+                                            }),
+                                            onUploadProgress: progress => {
+                                                if (typeof getProgress === 'function') getProgress(progress);
+                                            }
+                                        }).then(data => {
+                                            that.importing_ppt = false;
+                                            clearInterval(_progress_timer);
+                                            if (data.data.code !== "2") {
+                                                that.$toast(data.data.content, 2000);
+                                            } else {
+                                                if (typeof success === 'function') success(data);
+                                            }
+                                        }).catch(err => {
+                                            clearInterval(_progress_timer);
+                                            that.importing_ppt = false;
+                                        });
 
-line 5179:
-.editor-grabbing {
-            cursor: grabbing !important;
-        }
-        .editor-grabbing .editor-page * {
-            pointer-events: none !important;
-        }
 
-project:
-line539: 
-
-line1206:

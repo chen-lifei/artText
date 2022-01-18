@@ -1,7 +1,0 @@
-User-agent: *
-
-Disallow: /slides/*
-Disallow: /mobile/slides/*
-Disallow: /edit/*
-Disallow: /document_recovery_preview/*
-Disallow: /document_export/*
