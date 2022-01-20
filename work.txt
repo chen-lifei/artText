@@ -68,37 +68,19 @@ vue的transition标签使用先渐隐后渐显的动画：
 文档观察者
 vue的观察 observer??
 
-common.js
-import Axios from 'axios';
+DocumentCreate.vue
+line233:
+this.customData.width = '';
+                this.customData.height = '';
 
-import_pdf(that, formData, success, fail, getProgress, cancelImport) ..
+DesignView.vue
+line341
 
-const CancelToken = Axios.CancelToken;
-that.$axios({
-                                            method: 'post',
-                                            url: '/api/member/document/import_pdf/',
-                                            data: {
-                                                fileName: result.fileName,
-                                                downMsg: result.downMsg,
-                                                docId: _doc_id
-                                            },
-                                            cancelToken: new CancelToken(c => {
-                                                if (typeof cancelImport === 'function') cancelImport(c);
-                                            }),
-                                            onUploadProgress: progress => {
-                                                if (typeof getProgress === 'function') getProgress(progress);
-                                            }
-                                        }).then(data => {
-                                            that.importing_ppt = false;
-                                            clearInterval(_progress_timer);
-                                            if (data.data.code !== "2") {
-                                                that.$toast(data.data.content, 2000);
-                                            } else {
-                                                if (typeof success === 'function') success(data);
-                                            }
-                                        }).catch(err => {
-                                            clearInterval(_progress_timer);
-                                            that.importing_ppt = false;
-                                        });
+DocumentCard.vue
+line471:
+setTimeout(() => {
+                    this.width = this.$refs.card.clientWidth;
+                    this.height = (9 * this.width) / 16;
+                }, 100);
 
 
