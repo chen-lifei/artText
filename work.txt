@@ -68,19 +68,22 @@ vue的transition标签使用先渐隐后渐显的动画：
 文档观察者
 vue的观察 observer??
 
-DocumentCreate.vue
-line233:
-this.customData.width = '';
-                this.customData.height = '';
-
-DesignView.vue
-line341
-
-DocumentCard.vue
-line471:
-setTimeout(() => {
-                    this.width = this.$refs.card.clientWidth;
-                    this.height = (9 * this.width) / 16;
-                }, 100);
+NavHead.vue
+line152:
+.message-contain,
+    .member-contain {
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .member-contain img{
+        width: 34px;
+        height: 34px;
+        cursor: pointer;
+        vertical-align: middle;
+        border-radius: 50%;
+        border: 2px solid #e3e6ec;
+        image-rendering: -webkit-optimize-contrast;
+    }
 
 
