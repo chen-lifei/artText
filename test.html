@@ -10,11 +10,29 @@
         .text {
             color: #084c2382;
         }
+        ul:nth-of-type(n+1) {
+            border-bottom: 1px solid plum;
+        }
     </style>
 </head>
 
 <body">
     <div class="text">6666 this is a paragraph!!</div>
+
+    <div class="list">
+        <ul>
+            <li>1</li>
+        </ul>
+        <ul>
+            <li>2</li>
+            <li>2</li>
+        </ul>
+        <ul>
+            <li>3</li>
+            <li>3</li>
+            <li>3</li>
+        </ul>
+    </div>
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
