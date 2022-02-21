@@ -1770,7 +1770,8 @@
 
         <!-- 通用下拉弹框 -->
         <!-- 字体 -->
-        <text-family-modal v-if="pull_list_type === 'text_family'" ref="text_family"></text-family-modal>
+        <text-family-panel ref="text_family" v-if="pull_list_type === 'text_family'" :element_message="element_message" @set_font_family="set_font_family"></text-family-panel>
+
         <!-- 字号 -->
         <transition name="modal-fade">
             <div class="module_list font_size_list" ref="text_size" v-if="pull_list_type === 'text_size'">
@@ -1843,7 +1844,7 @@
     import baseUnitInput from '@/components/base/base-unit-input.vue';
     import baseKnob from '@/components/base/base-knob.vue';
     import FormatColor from '@/views/pc/EditView/FormatColor.vue';
-    import TextFamilyModal from '@/views/pc/EditView/TextFamilyModal.vue';
+    import TextFamilyPanel from '@/views/pc/EditView/TextFamilyPanel.vue';
     import table_preset from '@/assets/pc/json/TablePreset.json'
     import {edit_shape_json, replace_shape_json, edit_update_point} from '@/assets/pc/js/opt/shape_edit_opt.js';
     import {line_marker_list} from '@/assets/pc/js/opt/line_edit_opt.js';
@@ -1861,7 +1862,7 @@
             baseSeekBar,
             baseUnitInput,
             FormatColor,
-            TextFamilyModal,
+            TextFamilyPanel,
         },
         inject: ['EditView'],
         props:[
@@ -2520,6 +2521,7 @@
                 that.conv_list_show = is_conv;
                 that.$nextTick(() => {
                     let pullList = that.$refs[list_type];
+                    if (pullList.$el) pullList = pullList.$el;
                     // 通用列表插入对应位置
                     if (is_common) {
                         $(event.target.offsetParent).append(pullList);
@@ -3715,6 +3717,7 @@
             },
             // 选择文本字体
             set_font_family:function(item){
+                console.log(item);
                 let that = this,
                     fonts = document.fonts,
                     data = item.data,
