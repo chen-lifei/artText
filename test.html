@@ -7,48 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {
-            background-color: #f6f6f9;
+        .text {
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            color: pink;
+            border: 10px solid rgba(255, 192, 203, .5);
+            background-color: pink;
+            background-clip: padding-box;
+        }
+        input {
+            max-width: 300px;
         }
     </style>
 </head>
 
 <body">
-    <!-- <div id="jsi-flying-fish-container" class="fish container"><canvas width="1616" height="157"></canvas></div> -->
+    <div class="text">6666 this is a paragraph!!</div>
 
-    <canvas id="canvas" width="260" height="40"></canvas>
+    <input type="text" id="input" value="This is a paragraph, This is a paragraph, This is a paragraph, This is a paragraph" style="max-width: 300px;" />
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-
-    <script src="https://blog-static.cnblogs.com/files/elkyo/fish.js"></script>
-
+    
     <script>
-        function drawCanvas(theme) {
-            let canvas = document.getElementById('canvas');
-            let ctx = canvas.getContext('2d');
-            ctx.beginPath();
-            ctx.fillStyle = theme === 'light' ? '#FFFFFF' : '#303135';
-            ctx.moveTo(0, 0);
-            ctx.bezierCurveTo(25, 10, 10, 35, 50, 40);
-            ctx.moveTo(50, 40);
-            ctx.lineTo(210, 40);
-            ctx.lineTo(260, 0);
-            ctx.lineTo(0, 0);
-            ctx.moveTo(210, 40);
-            ctx.bezierCurveTo(240, 35, 225, 10, 260, 0);
-            ctx.moveTo(260, 0);
-            ctx.lineTo(0, 0);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        drawCanvas('light');
-
-        setTimeout(() => {
-            console.log('2s后');
-            drawCanvas('dark');
-        }, 2000);
+        let text = $('.text')[0];
+        let textStyle = window.getComputedStyle(text);
+        let input = $('#input');
+        console.log(input);
+        input.select();
+        input.focus();
     </script>
     </body>
 </html>
