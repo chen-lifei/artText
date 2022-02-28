@@ -34,7 +34,7 @@
                 <div class="main-desc">持续打磨优化核心功能，敏捷迭代，快速进化</div>
                 <div class="top-container flex">
                     <div class="left-container">
-                        <img src="~@/assets/pc/images/index/multiple-cooperate.svg" alt="">
+                        <!-- <img src="~@/assets/pc/images/index/multiple-cooperate.svg" alt=""> -->
                         <div class="info">多人协作，实时共享</div>
                         <div class="desc">仅一条链接即可随时邀请好友加入协作，实时编辑、评论互动，也可创建团队共享资料库，体验全新的工作方式</div>
                     </div>
@@ -111,8 +111,8 @@
                 </div>
             </div>
             <div class="list-container">
-                <div class="top-list">
-                    <div class="template-list"
+                <div class="top-list flex">
+                    <div class="template-item"
                         v-for="(item, index) in templateList.slice(0, 10)"
                         :key="index">
                         <img class="cover" :src="item.image" alt="">
@@ -168,16 +168,26 @@
             that.getTemplateList();
         },
 		methods: {
+            scroll() {
+                let darkArea = document.querySelector('.dark-area');
+                let top = darkArea.offsetTop - document.documentElement.scrollTop;
+                if (top < 100) {
+                    this.headOption = { theme:'dark', fixed: true };
+                } else {
+                    this.headOption = { theme:'white', fixed: true };
+                }
+            },
             observeDarkArea() {
                 let observer = new IntersectionObserver(entries => {
                     if (entries[0].isIntersecting || entries[0].intersectionRatio > 0) {
-                        this.headOption = { theme:'dark', fixed: true };
+                        document.addEventListener('scroll', this.scroll);
                     } else {
+                        document.removeEventListener('scroll', this.scroll);
                         this.headOption = { theme:'white', fixed: true };
                     }
                 });
-                let blackArea = document.querySelector('.dark-area');
-                observer.observe(blackArea);
+                let darkArea = document.querySelector('.dark-area');
+                observer.observe(darkArea);
             },
             toHome() {
                 this.$router.push('/home/');
@@ -611,9 +621,11 @@
                 .top-list {
                     margin-bottom: 40px;
                 }
-                .template-list {
+                .template-item {
                     display: inline-block;
                     height: 225px;
+                    margin-right: 30px;
+                    cursor: pointer;
                     .cover {
                         height: 100%;
                         object-fit: cover;
