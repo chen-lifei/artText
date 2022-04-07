@@ -11,9 +11,10 @@
 </head>
 
 <body">
-
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <div class="test"><span style="font-size: 50px; letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid467589fcaa925390b125a267a6f3"><span style="" class="" data-range="uuid6db3bfc143bba357441d788eb91f"><span style="" class="" data-range="uuid1557d1be729645a5b70f060ffad1">海<span style="" class="" data-range="uuid13cc4db7e301c1e9ed5810cb27eb">滨</span></span></span></span><div style="font-size: 50px; letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;"><span style="font-size: 50px; letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid467589fcaa925390b125a267a6f3"><span style="letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid45a1886c25ccd3ab88810d418cce"><a href="http://woodo.cn" style="color: rgb(0, 0, 238); text-decoration: underline; letter-spacing: 10px; position: relative; font-family: woodo-AZhuPaoPaoTi;">渐</a></span><span style="letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid44daf483a188eebd21344c0d5d4d"><span style="letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid45a1886c25ccd3ab88810d418cce"><a href="http://woodo.cn" style="color: rgb(0, 0, 238); text-decoration: underline; letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;">变</a></span><span style="letter-spacing: 10px; font-family: woodo-AZhuPaoPaoTi;" class="" data-range="uuid7c56f9c8dd585b427d81cc09be12">色<span style="" class="" data-range="uuid87a8d673e982a16218d6b4b4e6e0">模</span></span></span></span></div></div>
     
     <script>
         function getUrlExist(url) {
@@ -34,7 +35,11 @@
                 }
             });
         }
-        getUrlExist('http://www.baidu.com');
+        // getUrlExist('http://www.baidu.com');
+
+        $('.test').each((i, item) => {
+            console.log(dom);
+        });
     </script>
     </body>
 </html>
