@@ -761,22 +761,21 @@ let group_opt = {
 		}
 	},
 	// 设置元素超链接
-	ele_link_add: function(ele,link,page){
+	ele_link_add: function(ele, data, linkType){
 		// 错误状态判断
 		if (!ele || ele.length !== 1) {
 			console.error('params type error');
 			return false;
 		}
 		ele.each((index, item) => {
-			let type = $(item).attr('data-type'),
+			let type = linkType ? linkType : $(item).attr('data-type'),
 				$rotate = $(item).find('.ele_rotate');
-			editor_opt.set_link(ele, link, page);
 			switch (type) {
 				case 'text':
-					editor_opt.set_link(ele, link, page);
+					editor_opt.set_link(ele, data);
 					break;
 				case 'table':
-					editor_opt.set_link(ele, link, page);
+					editor_opt.set_link(ele, data);
 					break;
 				default:
 					$rotate.attr('title', link);

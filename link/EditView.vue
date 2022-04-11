@@ -7741,7 +7741,11 @@ export default {
             let $ele = $('.page_contain .ele_item.checked');
             let { text, page, link } = data;
             let option = opt_factory.init_opt('group');
-            if (this.current_link_dom) $ele = $(this.current_link_dom);
+            if (this.current_link_dom) {
+                $ele = $(this.current_link_dom);
+                option.ele_link_add($ele, data, 'text');
+                return;
+            };
             console.log($ele);
             if ($ele.attr('data-type') === 'text' || $ele.find('.cel_edit').length > 0) {
                 let $selector = $ele.find('.customize_selection');
@@ -7761,9 +7765,9 @@ export default {
                     $ele.find('.show_text.example_text').append(aEle);
                 }
                 // 修改链接
-                option.ele_link_add($ele, link);
+                option.ele_link_add($ele, data);
             } else {
-                option.ele_link_add($ele, link);
+                option.ele_link_add($ele, data);
                 // this.get_ele_link_info($ele);
             }
             // this.show_ele_link_modal = false;

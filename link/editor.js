@@ -875,7 +875,9 @@ let editor_opt = {
 		document.execCommand('outdent');
 	},
 	// 设置文本超链接
-	set_link: function (ele, link, page) {
+	set_link: function (ele, data) {
+		console.log('设置链接', ele);
+		let { text, link, page } = data;
 		if (link.indexOf('http') < 0) link = 'http://' + link;
 		let aDom = ele.attr('href') ? ele : ele.find('a[href]');
 		if(aDom.length) {
@@ -885,7 +887,19 @@ let editor_opt = {
 			// 恢复储存选区
 			editor_opt.recover_text_selection(ele);
 			// 设置超链接
-			document.execCommand("createLink", false, link);
+			document.execCommand('createLink', false, link);
+			document.execCommand('subscript', false);
+			let $set_dom = $(ele).find('[style*="vertical-align: sub;"]'),
+				reg = new RegExp("vertical-align: sub", "g"),
+				get_css = '';
+			$set_dom.each((index, dom) => {
+				dom = $(dom);
+				get_css = dom.attr('style').replace(reg, '');
+				dom.attr('style', get_css);
+				dom.find('a').each((aIndex, aDom) => {
+					$(aDom).attr('page', page);
+				})
+			})
 			let sel = window.getSelection();
 			// 当前框选节点
 			let rangeNode = sel.getRangeAt(0).commonAncestorContainer;

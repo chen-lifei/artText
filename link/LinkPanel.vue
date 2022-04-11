@@ -105,7 +105,6 @@
             },
             editDisable() {
                 let linkValidate = $validate(this.linkParams.link).urlReg();
-                console.log(linkValidate);
                 return !this.linkParams.text || (!this.linkParams.link && !this.linkParams.page) || !linkValidate;
             }
         },
@@ -184,7 +183,6 @@
                 if (this.editDisable) return;
                 let isLink = /^http(s?):\/\//.test(this.linkParams.link);               // 判断是否添加http或者https协议开头
                 if (!isLink) this.linkParams.link = 'http://' + this.linkParams.link;
-                console.log('panel edit', this.linkParams);
                 this.$emit('edit', this.linkParams);
             },
             getPagePosition() {
