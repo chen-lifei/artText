@@ -93,3 +93,51 @@ line152:
 接入字节图标
 1、封面图生成：重新封装一个json,包含封面图，封面图通过字节提供的svg，转成base64
 2、插入画布使用：首先调用字节提供的api，传入颜色、大小等配置，获取到字节返回的内容，然后转成svg，再把svg换成吾道可以使用的html结构（复制粘贴svg，拾色器）
+
+addBytedanceIcon({
+                icon: bytedanceIcon[317],
+                size: '800',
+                color: '#0B7BF6',
+                build(svg) {
+                    try {
+                        let shape_opt = opt_factory.init_opt('shape'),
+                            option = opt_factory.init_opt('group'),
+                            svg_obj = shape_opt.format_paste_shape(svg).element_list;
+
+                        svg_obj.forEach(item => {
+                            item = that.ele_build_before_format(item);
+                            item.iconSize = 80;
+                        });
+                        let svg_format = option.ele_paste(that, { list: svg_obj });
+
+                        if (svg_format.list.length === 1) {
+                            let $ele = $('.page_contain').find('#' + svg_format.list[0].id);
+                            // 设置居中
+                            option.fit_dom_offset($ele);
+                            // 选中元素
+                            that.set_ele_checked($ele);
+                        } else if (svg_format.list.length > 1) {
+                            svg_format.list.forEach(item => {
+                                let $ele = $('.page_contain').find('#' + item.id);
+                                $ele.addClass('checked');
+                            });
+                            let $checked = $('.page_contain .ele_item.checked');
+                            // 设置居中
+                            option.fit_dom_offset($checked);
+                            // 选中元素
+                            that.set_ele_checked($checked);
+                        }
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            });
+
+
+shape_opt: line568
+if (ele.iconSize) {
+			ele.viewBox = `0 0 ${ele.iconSize} ${ele.iconSize}`;
+		}
+
+line620:
+				if (!fill) fill = 'none';
