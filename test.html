@@ -37,6 +37,16 @@
             });
         }
         // getUrlExist('http://www.baidu.com');
+
+        function test(str) {
+            str = str.split('-');
+            let newStr = '';
+            str.forEach(item => {
+                newStr += item.replace(item[0], item[0].toUpperCase());
+            });
+            console.log(newStr);
+            return newStr;
+        }
     </script>
     </body>
 </html>
