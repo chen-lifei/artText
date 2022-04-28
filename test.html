@@ -11,12 +11,17 @@
 </head>
 
 <body">
-    <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
 
     <svg width="280" height="280" viewBox="0 0 48 48" fill="none"><path d="M15 12L18 6H30L33 12H15Z" fill="none" stroke="#0B7BF6" stroke-width="4" stroke-linejoin="round"></path><rect x="4" y="12" width="40" height="30" rx="3" fill="none" stroke="#0B7BF6" stroke-width="4" stroke-linejoin="round"></rect><path d="M24 35C28.4183 35 32 31.4183 32 27C32 22.5817 28.4183 19 24 19C19.5817 19 16 22.5817 16 27C16 31.4183 19.5817 35 24 35Z" fill="none" stroke="#0B7BF6" stroke-width="4" stroke-linejoin="round"></path></svg>
 
-    
+    <div>
+        <video class="video" width="455" height="255.938" autoplay="" controls="" src="https://500dme-test.oss-cn-shenzhen.aliyuncs.com/upload/media/202204/27/uuid712299ef36af94c66fc4f03b435c.mp4" style="display: block;"></video>
+
+        <!-- <video class="video" data-src="https://500dme-test.oss-cn-shenzhen.aliyuncs.com/upload/media/202204/28/uuidc133f402c57ade2e320479ee1092.mp4" width="455" height="255.938" autoplay="" controls="" src="" style="display: none;"></video> -->
+    </div>
+
     <script>
         function getUrlExist(url) {
             let isExist = false;
@@ -46,6 +51,72 @@
             });
             console.log(newStr);
             return newStr;
+        }
+
+        let str = 'translate(17.000000, 30.499998) rotate(180.000000) translate(-17.000000, -30.499998)';
+        str = str.replace(/[^rotate\([0-9\.]\)]/, '');
+
+        document.addEventListener('click', (e) => {
+            console.log(e, checkIsFullScreen());
+        });
+
+        document.addEventListener('fullscreenchange', (e) => {
+            console.log(e, checkIsFullScreen());
+        });
+
+        document.addEventListener('fullscreenchange', (event) => {
+            // document.fullscreenElement will point to the element that
+            // is in fullscreen mode if there is one. If there isn't one,
+            // the value of the property is null.
+            if (document.fullscreenElement) {
+                console.log(`Element: ${document.fullscreenElement.id} entered full-screen mode.`);
+            } else {
+                console.log('Leaving full-screen mode.');
+            }
+        });
+
+        $(window).resize((e) => {
+            console.log('resize', e, checkIsFullScreen());
+        });
+
+        function checkIsFullScreen() {
+            let isFullScreen = document.fullscreen || document.mozFullScreen || document.webkitFullScreen;
+            console.log(isFullScreen);
+            return !!isFullScreen;
+        }
+
+        function fullScreen() {
+            let ele = document.documentElement;
+            if (ele.requestFullscreen) {
+                ele.requestFullscreen();
+            } else if (ele.mozRequestFullscreen) {
+                ele.mozRequestFullscreen();
+            } else if (ele.webkitRequestFullscreen) {
+                ele.webkitRequestFullscreen();
+            }
+            console.log(334444);
+            document.querySelector('.video').style.width = '100%';
+            document.querySelector('.video').style.height = '100%';
+        }
+        
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+              toggleFullScreen();
+            }
+        }, false);
+
+        function toggleFullScreen() {
+            console.log(document.fullscreenElement);
+            let video = document.querySelector('.video');
+            console.log(video.fullscreenElement);
+            if (!document.fullscreenElement) {
+                // document.documentElement.requestFullscreen();
+                video.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
         }
     </script>
     </body>
