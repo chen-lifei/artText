@@ -7,141 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {
+        .i-test {
+            width: 10px;
+            height: 10px;
             background-color: plum;
-        }
-        .filter-page {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-            padding: 10px 0;
-            background-color: #FFFFFF;
-        }
-        .category,
-        .major,
-        .filter {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            padding: 20px 50px;
-            border-bottom: 1px solid #F6F6F9;
-        }
-        .filter {
-            flex-wrap: wrap;
-            justify-content: space-between;
-            border: none;
-        }
-        .name {
-            font-size: 14px;
-            color: #242429;
-            font-weight: bold;
-            margin-right: 40px;
-            padding: 11px 0;
-            min-width: 70px;
-        }
-        .secondary-list {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid #F6F6F9;
-        }
-        .item-list {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .item {
-            padding: 11px 16px;
-            margin: 0 10px 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .item:hover {
-            color: #0B7BF6;
-            background-color: rgba(11,123,246,0.1);
-        }
-        .filter-item {
-            display: flex;
-        }
-        .filter-list {
-            display: flex;
-        }
-        .line {
-            align-self: center;
-            width: 1px;
-            height: 14px;
-            background-color: #F6F6F9;
-        }
-        .filter-list .item:last-of-type {
-            margin-right: 0;
         }
     </style>
 </head>
 
 <body">
-    <!-- <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> -->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
-
-    <div class="filter-page">
-        <div class="category">
-            <div class="name">营销分类：</div>
-            <div class="category-list">
-                <div class="top-list item-list">
-                    <div class="item">全部</div>
-                    <div class="item">商业策划</div>
-                    <div class="item">培训课件</div>
-                    <div class="item">年终总结</div>
-                    <div class="item">毕业答辩</div>
-                    <div class="item">商业策划</div>
-                    <div class="item">培训课件</div>
-                    <div class="item">年终总结</div>
-                    <div class="item">毕业答辩</div>
-                    <div class="item">商业策划</div>
-                    <div class="item">培训课件</div>
-                    <div class="item">年终总结</div>
-                    <div class="item">毕业答辩</div>
-                </div>
-                <div class="secondary-list item-list">
-                    <div class="item">融资方案</div>
-                    <div class="item">项目招商</div>
-                    <div class="item">代理加盟</div>
-                    <div class="item">公司介绍</div>
-                    <div class="item">产品推荐</div>
-                </div>
-            </div>
-        </div>
-        <div class="major">
-            <div class="name">场景行业：</div>
-        </div>
-        <div class="filter">
-            <div class="filter-item">
-                <div class="name">筛选推荐：</div>
-                <div class="filter-list">
-                    <div class="item">最新上传</div>
-                    <div class="item">最多阅读</div>
-                    <div class="item">最多应用</div>
-                </div>
-            </div>
-            <div class="line"></div>
-            <div class="filter-item">
-                <div class="name"><span style="margin-right: 28px;">价</span>格：</div>
-                <div class="filter-list">
-                    <div class="item">全部</div>
-                    <div class="item">免费</div>
-                    <div class="item">会员免费</div>
-                </div>
-            </div>
-            <div class="line"></div>
-            <div class="filter-item">
-                <div class="name"><span style="margin-right: 28px;">属</span>性：</div>
-                <div class="filter-list">
-                    <div class="item">全部</div>
-                    <div class="item">不可编辑</div>
-                    <div class="item">可编辑</div>
-                </div>
-            </div>
-        </div>
+    <div class="show-text">
+        <span class="span1">
+            <span class="span2">红红火火恍恍惚惚</span>
+        </span>
     </div>
+    <i class="i-test"></i>
 
     <script>
+        let dom = document.createElement('div');
+        dom.innerHTML = `<span style="font-family: Microsoft YaHei"><div style="font-family: Microsoft YaHei;"><span style="font-size: 40px; color: rgb(255, 255, 255); font-family: Microsoft YaHei;">移动科技互联网科技谢谢科技科技生活真美好</span></div></span>`;
+        let spanEle = $(dom).find('span');
+        let searchRes = [];
+        spanEle.each((index, span) => {
+            if (span.childNodes[0].nodeName === '#text') {
+                let text = span.innerText;
+                let regExp = new RegExp('科技', 'g');
+                let matchRes = [...text.matchAll(regExp)];
+                console.log(matchRes);
+                if (!matchRes || !matchRes.length) return;
+                matchRes.forEach(res => {
+                    searchRes.push({
+                        spanIndex: index,
+                        textIndex: res.index
+                    });
+                });
+            }
+        });
+        console.log('查找结果：', searchRes);
     </script>
     </body>
 </html>
