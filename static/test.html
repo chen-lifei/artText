@@ -12,6 +12,9 @@
             height: 10px;
             background-color: plum;
         }
+        .search-highlight {
+            background-color: pink;
+        }
     </style>
 </head>
 
@@ -20,7 +23,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <div class="show-text">
         <span class="span1">
-            <span class="span2">红红火火恍恍惚惚</span>
+            <span class="span2">红红火火恍恍惚惚科技</span>
         </span>
     </div>
     <i class="i-test"></i>
@@ -46,6 +49,16 @@
             }
         });
         console.log('查找结果：', searchRes);
+        
+        let currentNode = $('.show-text');
+        let span = currentNode.find('span')[1];
+        span = $(span);
+        let spanText = span[0].innerText;
+        console.log(span[0]);
+        spanText = spanText.replace('科技', '<span class="search-highlight" data-index="1">科技</span>');
+        
+        span[0].innerHTML = spanText;
+        // old_ele.parentNode.replaceChild($(new_ele_html)[0], old_ele);
     </script>
     </body>
 </html>
