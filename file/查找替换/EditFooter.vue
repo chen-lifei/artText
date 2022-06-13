@@ -9,6 +9,10 @@
             <base-icon class="iconsousuo"></base-icon>
             <span>查找</span>
         </div>
+        <div class="find-bar" @click="replaceEle">
+            <base-icon class="icontihuan2line"></base-icon>
+            <span>替换</span>
+        </div>
         <!-- 备注 -->
         <div :class="['note-bar', {'active': hasNote}]"  @click="toggleNote()">
             <base-icon class="iconbianji" size="12"></base-icon>
@@ -311,26 +315,25 @@ export default {
             this.EditView.submit_error_to_aliyun(id);
         },
         findEle() {
-            let searchRes = [
-                {
-                    "pagId": "aea9eab1de994569ba36b07eb554d1ed",
-                    "eleId": "uuid1cdb9af4d61b4b9497e58e8c6c230758",
-                    "spanIndex": 1,
-                    "textIndex": 0
-                },
-                {
-                    "pagId": "aea9eab1de994569ba36b07eb554d1ed",
-                    "eleId": "uuid0157dc747e776a54966ba2c92549",
-                    "spanIndex": 0,
-                    "textIndex": 4
-                },
-                {
-                    "pagId": "aea9eab1de994569ba36b07eb554d1ed",
-                    "eleId": "uuid0157dc747e776a54966ba2c92549",
-                    "spanIndex": 0,
-                    "textIndex": 9
-                }
-            ];
+            let searchRes = page_opt.searchEle(this.EditView, '品牌');
+
+            page_opt.setEleHighlight(searchRes);
+        },
+        replaceEle() {
+            let allSearch = $('.search-highlight');
+            allSearch.each((index, item) => {
+                console.log(item);
+                item.innerText = '我的品牌';
+            });
+            setTimeout(() => {
+                this.clearSearchRes();
+            }, 2000);
+        },
+        clearSearchRes() {
+            let allSearch = $('.search-highlight');
+            allSearch.each((index, item) => {
+                item.outerHTML = item.outerText;
+            });
         },
     }
 }

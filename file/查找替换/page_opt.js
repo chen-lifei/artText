@@ -1439,44 +1439,57 @@ let page_opt = {
             }
         }
     },
-    // 选择替换功能
-	chooseEle(that, findStr) {
+    // 查找替换功能 -- 查找
+	searchEle(that, findStr) {
         let list = that.document_page_list;
-        let regExp = new RegExp(findStr, 'g');
         let searchRes = [];
-        // list = [list[0]];
-        let searchIndex = -1;
+        // list = [list[1]];
+        list = list.slice(0, 4);
+
         list.forEach(page => {
+            // 页面的所有元素
             let domStr = page_opt.get_dom(that.document_info, page);
             let dom = document.createElement('div');
             dom.innerHTML = domStr;
             let eleItems = $(dom).find('.ele_item');
+            
+            // 获取所有匹配项
             if (eleItems.length) {
                 eleItems.each((eleIndex, ele) => {
-                    let spanEle = $(ele).find('.show_text span');
-                    if (spanEle.length) {
-                        spanEle.each((spanIndex, span) => {
-                            if (span.childNodes[0].nodeName === '#text') {
-                                let text = span.innerText;
-                                let matchRes = [...text.matchAll(regExp)];
-                                if (!matchRes || !matchRes.length) return;
-                                matchRes.forEach(res => {
-                                    searchIndex++;
-                                    searchRes.push({
-                                        pagId: page.uuid,
-                                        eleId: ele.getAttribute('id'),
-                                        searchIndex: searchIndex,
-                                        spanIndex: spanIndex,
-                                        textIndex: res.index
-                                    });
-                                });
-                            }
+                    let textEle = $(ele).find('.show_text');
+
+                    if (textEle.length) {
+                        let text = textEle[0].innerText;
+                        let regExp = new RegExp(findStr, 'g');
+                        let matchRes = [...text.matchAll(regExp)];
+                        if (!matchRes || !matchRes.length) return;
+                        matchRes.forEach(res => {
+                            searchRes.push({
+                                pagId: page.uuid,
+                                eleId: ele.getAttribute('id'),
+                                textIndex: res.index
+                            });
                         });
                     }
                 });
             }
         });
-        console.log('查找结果：', searchRes);
+        // console.log('查找结果：', searchRes);
+
+        return searchRes;
 	},
+    // 查找替换功能 -- 高亮
+    setEleHighlight(searchRes) {
+        searchRes.forEach(res => {
+            let $ele = $('.page_contain').find(`.ele_item[id=${res.eleId}]`);
+            let textEle = $ele.find('.show_text');
+            textEle = $(textEle);
+            console.log(textEle);
+            debugger;
+            let textHTML = textEle[0].innerHTML;
+            textHTML = textHTML.replace(/品牌/g, `<span class="search-highlight">品牌</span>`);
+            textEle[0].innerHTML = textHTML;
+        });
+    },
 };
 export default page_opt;
