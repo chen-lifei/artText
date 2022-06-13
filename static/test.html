@@ -23,7 +23,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
     <div class="show-text">
         <span class="span1">
-            <span class="span2">红红火火恍恍惚惚科技</span>
+            <span class="span2">红科技火火恍恍惚惚科技</span>
         </span>
     </div>
     <i class="i-test"></i>
@@ -55,9 +55,15 @@
         span = $(span);
         let spanText = span[0].innerText;
         console.log(span[0]);
-        spanText = spanText.replace('科技', '<span class="search-highlight" data-index="1">科技</span>');
+        // spanText = spanText.replace('科技', '<span class="search-highlight" data-index="1">科技</span>');
+        spanText = spanText.replace(/科技/g, (match, offset, string) => {
+            console.log(match, offset, string);
+            return offset == 9 ? '<span class="search-highlight" data-index="9">科技</span>' : '科技';
+        });
         
         span[0].innerHTML = spanText;
+
+
         // old_ele.parentNode.replaceChild($(new_ele_html)[0], old_ele);
     </script>
     </body>
