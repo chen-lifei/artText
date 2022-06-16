@@ -7,64 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .i-test {
-            width: 10px;
-            height: 10px;
-            background-color: plum;
-        }
-        .search-highlight {
-            background-color: pink;
-        }
     </style>
 </head>
 
 <body">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
-    <div class="show-text">
-        <span class="span1">
-            <span class="span2">红科技火火恍恍惚惚科技</span>
-        </span>
-    </div>
-    <i class="i-test"></i>
 
     <script>
-        let dom = document.createElement('div');
-        dom.innerHTML = `<span style="font-family: Microsoft YaHei"><div style="font-family: Microsoft YaHei;"><span style="font-size: 40px; color: rgb(255, 255, 255); font-family: Microsoft YaHei;">移动科技互联网科技谢谢科技科技生活真美好</span></div></span>`;
-        let spanEle = $(dom).find('span');
-        let searchRes = [];
-        spanEle.each((index, span) => {
-            if (span.childNodes[0].nodeName === '#text') {
-                let text = span.innerText;
-                let regExp = new RegExp('科技', 'g');
-                let matchRes = [...text.matchAll(regExp)];
-                console.log(matchRes);
-                if (!matchRes || !matchRes.length) return;
-                matchRes.forEach(res => {
-                    searchRes.push({
-                        spanIndex: index,
-                        textIndex: res.index
-                    });
-                });
-            }
-        });
-        console.log('查找结果：', searchRes);
-        
-        let currentNode = $('.show-text');
-        let span = currentNode.find('span')[1];
-        span = $(span);
-        let spanText = span[0].innerText;
-        console.log(span[0]);
-        // spanText = spanText.replace('科技', '<span class="search-highlight" data-index="1">科技</span>');
-        spanText = spanText.replace(/科技/g, (match, offset, string) => {
-            console.log(match, offset, string);
-            return offset == 9 ? '<span class="search-highlight" data-index="9">科技</span>' : '科技';
-        });
-        
-        span[0].innerHTML = spanText;
-
-
-        // old_ele.parentNode.replaceChild($(new_ele_html)[0], old_ele);
     </script>
     </body>
 </html>
