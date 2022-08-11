@@ -1,6 +1,10 @@
 http://jenkins.500ding.me/jenkins/
+五百丁jenkins：http://192.168.3.202:8080/jenkins/
 chenlifei
-clf12345678Abc
+clf123456
+吾道jenkins：http://192.168.3.203:8080/jenkins/
+chenlifei
+clf12345678
 
 迦剪管理中心：
 chenlifei/clf12345678
