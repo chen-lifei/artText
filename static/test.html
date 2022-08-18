@@ -7,212 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .line {
-            width: 100%;
-            height: 60px;
-        }
-
-        img {
-            width: 800px;
-            object-fit: cover;
+        .myCanvas {
+            position: relative;
+            width: 400px;
+            height: 720px;
         }
     </style>
 </head>
 
 <body">
-    <input id="upload" type="file" />
-    <div class="line"></div>
-    <div>原图：</div>
-    <img id="oImg" src="" alt="">
-    <div class="line"></div>
-    <div>转换后的图：</div>
-    <img id="img" src="" alt="">
-
-    <canvas id="canvas"></canvas>
+    <div class="myCanvas"></div>
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
 
     <script>
-        let upload = document.querySelector('#upload');
-        upload.addEventListener('change', (event) => {
-            let file = event.target.files[0];
-            // handleCompressImage(file);
-            getFileRotate(file);
-
-            // imageConversion.compress(file, {
-            //     quality: 0.8,
-            //     type: "image/jpeg",
-            //     width: 3024,
-            //     height: 4032,
-            //     orientation: 1
-            // }).then(res => {
-            //     console.log(res);
-            //     let img = document.querySelector('#img');
-            //     let url = URL.createObjectURL(res);
-            //     img.src = url;
-            // });
-        });
-
-        // 压缩图片的分辨率
-        function handleCompressImage(img) {
-            let type = img.type.split('/');
-            type = type[1];
-            let size = img.size;
-            console.log(size);
-            let beforeTime = new Date().getTime();
-            if (['jpg', 'jpeg', 'png'].includes(type)) {
-                let reader = new FileReader();
-                // 读取文件
-                reader.readAsDataURL(img);
-                reader.onload = function (e) {
-                    let src = e.target.result;
-                    console.log(src);
-
-                    let image = new Image();
-                    image.src = src;
-
-                    let oImg = document.querySelector('#oImg');
-                    oImg.src = src;
-
-                    image.onload = function () {
-                        let canvas = document.createElement('canvas');
-                        let context = canvas.getContext('2d');
-
-                        // if (image.height <= 2560) {
-                        //     console.log('小于或等于2K的图片');
-                        //     return;
-                        // }
-                        // 压缩成2K
-                        // let imageHeight = 2560;
-                        // let imageWidth = imageHeight * (image.width / image.height);
-                        // imageWidth = Math.ceil(imageWidth);
-                        
-                        let imageWidth = image.naturalWidth;
-                        let imageHeight = image.naturalHeight;
-
-                        // console.log('压缩前', image.width, image.height, image.naturalWidth, image.naturalHeight);
-                        // console.log('压缩后', imageWidth, imageHeight);
-                        canvas.width = imageWidth;
-                        canvas.height = imageHeight;
-
-                        try {
-                            EXIF.getData(image, function() {
-                                let orientation = EXIF.getTag(this, 'Orientation');
-                                console.log(orientation);
-                                if (orientation && orientation !== 1) {
-                                    switch (orientation) {
-                                        case 6:
-                                            // 旋转90度
-                                            canvas.width = imageHeight;
-                                            canvas.height = imageWidth;
-                                            context.rotate(90 * Math.PI / 180);
-                                            context.drawImage(image, 0, -imageHeight, imageWidth, imageHeight);
-                                            break;
-                                        case 3:
-                                            // 旋转180度
-                                            context.rotate(Math.PI);
-                                            context.drawImage(image, -imageWidth, -imageHeight, imageWidth,imageHeight);
-                                            break;
-                                        case 8:
-                                            // 旋转270度
-                                            canvas.width = imageHeight;
-                                            canvas.height = imageWidth;
-                                            context.rotate(270 * Math.PI / 180);
-                                            context.drawImage(image, -imageWidth, 0, imageWidth, imageHeight);
-                                            break;
-                                    }
-                                } else {
-                                    context.drawImage(image, 0, 0, imageWidth, imageHeight);
-                                }
-                            });
-
-                            let img = document.querySelector('#img');
-                            canvas.toBlob(function (blob) {
-                                console.log(blob);
-                                // if (blob && blob.size <= size) {
-                                if (blob) {
-                                    let url = URL.createObjectURL(blob);
-                                    img.src = url;
-                                    let currentTime = new Date().getTime();
-                                    console.log('压缩所用时间：', (currentTime - beforeTime) / 1000, '秒');
-                                } else {
-                                    console.log('压缩后图片体积竟然变大了');
-                                }
-                            }, `image/${type}`);
-                        } catch(e) {
-                            console.log(e);
-                        }
-                    }
-                };
-            };
-        };
-
-        // 获取图片是否旋转
-        function getFileRotate(file) {
-            let getStringFromDB = function (dataView, start, length) {
-				let str = '', i;
-				for (i = start; i < start + length; i++) {
-					str += String.fromCharCode(dataView.getUint8(i));
-				}
-				return str;
-			}
-
-			let reader = new FileReader();
-            reader.onload = function(e) {
-                let binFile = e.target.result;
-                let dataView = new DataView(binFile);
-                console.log(dataView);
-                if ((dataView.getUint8(0) != 0xFF) || (dataView.getUint8(1) != 0xD8)) return false;
-                let offset = 2,
-                    length = binFile.byteLength,
-                    start, orientation;
-                while (offset < length) {
-                    if (dataView.getUint8(offset) === 0xFF && dataView.getUint8(offset + 1) === 0xE1) {
-                        start = offset + 4;
-                        break;
-                    }
-                    offset++;
+        let removeElement = function(arr, val) {
+            let n = 0;
+            let left = 0;
+            let right = arr.length - 1;
+            while(left < right) {
+                if (arr[left] === val) {
+                    arr[left] = arr[right];
+                    right--;
+                } else {
+                    left++;
+                    n++;
                 }
-                if (!start) return false;
-                let tiffOffset = start + 6;
-                if (getStringFromDB(dataView, start, 4) === 'Exif') {
-                    let littleEndian;
-                    if (dataView.getUint16(tiffOffset) == 0x4949) {
-                        littleEndian = true;
-                    } else if (dataView.getUint16(tiffOffset) == 0x4D4D) {
-                        littleEndian = false;
-                    } else {
-                        return false;
-                    }
-
-                    if (dataView.getUint16(tiffOffset + 2, littleEndian) === 0x002A) {
-                        let firstIFDOffset = dataView.getUint32(tiffOffset + 4, littleEndian);
-                        if (firstIFDOffset >= 0x00000008) {
-                            let dirStart = tiffOffset + firstIFDOffset;
-                            length = dataView.getUint16(dirStart, littleEndian);
-                            for (let i = 0; i < length; i++) {
-                                offset = dirStart + i * 12 + 2;
-                                if (dataView.getUint16(offset, littleEndian) === 0x0112) {
-                                    offset += 8;
-                                    orientation = dataView.getUint16(offset, littleEndian);
-                                    let ua = window.navigator.userAgent;
-                                    if ((/(iPhone|iPod|iPad)/gi.test(ua) || /Mac OS/gi.test(ua)) && /(Safari|Version)/gi.test(ua)) {
-                                        orientation = dataView.setUint16(offset, 1, littleEndian);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                console.log(orientation);
-                return orientation;
             }
-            reader.readAsArrayBuffer(file);
-        }
+
+            console.log(arr);
+            return n;
+        };
+        let res = removeElement([1,2,3,4,5], 1);
+        console.log(res);
 
         // #region
         // let canvas = document.getElementById("canvas");
