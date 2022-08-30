@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: #f6fcf2;
+        }
+        .book-detail-wrapper {
+            margin-left: 30px;
+        }
+        .back {
+            color: #8CAB91;
+            margin-bottom: 20px;
+        }
+        .book-detail {
+            width: auto;
+            min-width: 600px;
+            max-width: 800px;
+            height: 800px;
+            border-radius: 10px;
+            background: #FFFFFF;
+            padding: 30px;
+        }
+        .book-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .book-info .book-cover {
+            width: 200px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+        .center-wrapper {
+            width: 300px;
+        }
+        .info-wrapper {
+            padding: 30px 20px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            background: #f6fcf2;
+        }
+        .info-wrapper .name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .info span {
+            color: #737a74;
+        }
+        .button-wrapper .button {
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: #FFFFFF;
+            border-radius: 14px;
+            background: #8CAB91;
+            box-shadow: 0 4px 10px 0 rgba(140, 171, 145, .5);
+            cursor: pointer;
+        }
+        .button.start {
+            margin-right: 20px;
+        }
+        .book-desc {
+            color: #737a74;
+            line-height: 1.5;
+            font-size: 18px;
+        }
+        .reader {
+            width: 88px;
+        }
+        .reader .text {
+            font-size: 12px;
+            color: #737a74;
+            margin-bottom: 8px;
+        }
+        .user-list {
+            position: relative;
+        }
+        .user-list .user {
+            position: absolute;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            color: #FFFFFF;
+            text-align: center;
+            line-height: 24px;
+            border-radius: 50%;
+            border: 2px solid #FFFFFF;
+        }
+        .user1 {
+            position: relative;
+        }
+        .user2 {
+            left: 20px;
+        }
+        .user3 {
+            left: 40px;
+        }
+        .user-more {
+            left: 60px;
+            background: #8CAB91;
+        }
+        .tab-wrapper {
+            margin: 20px 0;
+        }
+        .tab {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 15px;
+            color: #8CAB91;
+            border-radius: 8px;
+            background: #F5FAF1;
+            cursor: pointer;
+        }
+        .tab.catalog {
+            margin-right: 10px;
+        }
+        .tab.select {
+            color: #FFFFFF;
+            background: #8CAB91;
+        }
+        .catalog-list {
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% + 20px);
+        }
+        .catalog-list .catalog-wrapper {
+            display: flex;
+            width: 25%;
+            height: 108px;
+            margin-bottom: 20px;
+            border-right: 20px solid #FFFFFF;
+            box-sizing: border-box;
+        }
+        .catalog-list .catalog {
+            position: relative;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 6px;
+            background: #F5FAF1;
+            cursor: pointer;
+        }
+        .catalog .chapter {
+            color: #bdbdbd;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+        .catalog .name {
+            color: #737a74;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .catalog .tag {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 50px;
+            height: 24px;
+            font-size: 12px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 6px;
+        }
+        .catalog .tag.unread {
+            color: #bcbcc2;
+            background: rgba(188, 188, 194, 0.25);
+        }
+        .catalog .tag.reading {
+            color: #ffbd21;
+            background: rgba(255, 189, 33, 0.25);
+        }
+        .catalog .tag.read {
+            color: #00d097;
+            background: rgba(0, 208, 151, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="book-detail-wrapper">
+        <div class="back"><—返回</div>
+        <div class="book-detail">
+            <div class="book-info">
+                <img class="book-cover" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                <div class="center-wrapper">
+                    <div class="info-wrapper">
+                        <div class="name">一只驯鹿的故事</div>
+                        <div class="info">
+                            <span>作者：埃尔</span>
+                            <span>创作于2022.01.23</span>
+                        </div>
+                        <div class="info">
+                            <span>阅读量：666</span>
+                            <span>收藏量：6</span>
+                            <span>评分：5.0</span>
+                        </div>
+                    </div>
+                    <div class="button-wrapper">
+                        <div class="button start">开始阅读</div>
+                        <div class="button">加入书架</div>
+                    </div>
+                </div>
+                <div class="reader">
+                    <div class="text">他们也在读</div>
+                    <div class="user-list">
+                        <img class="user user1" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                        <img class="user user2" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                        <img class="user user3" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                        <div class="user user-more">+6</div>
+                    </div>
+                </div>
+            </div>
+            <div class="book-desc">
+                简介：<br />
+                下面我们会从不同维度分析一下这个APP的社交分享功能设计，看看这里面有哪些值得探讨的地方。
+                用户分享内容到社交媒体或好友，不应该是一种粗暴的强制行为，我们应该在保证产品本身内容有吸引力的核心前提下，仔细揣摩用户心理，结合产品本身的特色，在不同情境下提供给用户最合适的分享内容。
+            </div>
+            <div class="tab-wrapper">
+                <div class="tab catalog">章节目录</div>
+                <div class="tab select">评论</div>
+            </div>
+            <!-- 章节目录列表 -->
+            <!-- <div class="catalog-list">
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 1 章</div>
+                        <div class="name">你说你是谁？</div>
+                        <div class="tag unread">未读</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 2 章</div>
+                        <div class="name">我说我是你哥！</div>
+                        <div class="tag read">已读完</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 3 章</div>
+                        <div class="name">但我根本就不认识你。</div>
+                        <div class="tag reading">正在读</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 4 章</div>
+                        <div class="name">可我很想你能认识我</div>
+                        <div class="tag unread">未读</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 5 章</div>
+                        <div class="name">或许，我们上辈子见过吧，但这辈子我全都忘记了</div>
+                        <div class="tag reading">正在读</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 6 章</div>
+                        <div class="name">可我很想你能认识我</div>
+                        <div class="tag unread">未读</div>
+                    </div>
+                </div>
+                <div class="catalog-wrapper">
+                    <div class="catalog">
+                        <div class="chapter">第 7 章</div>
+                        <div class="name">可我很想你能认识我</div>
+                        <div class="tag unread">未读</div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- 评论 -->
+        </div>
+    </div>
+</body>
+</html>
