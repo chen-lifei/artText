@@ -6,8 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
+            user-select: none;
             background: #f6fcf2;
+            color: #737a74;
+        }
+        ::-webkit-scrollbar {
+            width:4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #d8e3d9;
+            border-radius:10px;
         }
         .book-detail-wrapper {
             margin-left: 30px;
@@ -24,6 +36,7 @@
             border-radius: 10px;
             background: #FFFFFF;
             padding: 30px;
+            overflow: hidden auto;
         }
         .book-info {
             display: flex;
@@ -192,6 +205,80 @@
             color: #00d097;
             background: rgba(0, 208, 151, 0.25);
         }
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+        .input {
+            width: 100%;
+            height: 90px;
+            color: #737a74;
+            padding: 10px 15px 30px;
+            border-radius: 10px;
+            resize: none;
+            outline: none;
+            border: 1px solid transparent;
+            background: #F6FCF2;
+        }
+        .input:focus {
+            border-color: #8cab91;
+        }
+        .input::placeholder {
+            color: #bdbdbd;
+        }
+        .input-wrapper .submit {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 14px;
+            color: #737a74;
+            cursor: pointer;
+        }
+        .input-wrapper .submit:hover {
+            color: #8cab91;
+        }
+        .comment-item .top-comment {
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(125, 133, 146, 0.1);
+        }
+        .top-comment .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .comment-info .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;            
+            height: 36px;
+            margin-bottom: 10px;
+        }
+        .comment-info .user-info .right {
+            font-size: 12px;
+            color: #BDBDBD;
+        }
+        .comment-date {
+            margin-right: 6px;
+        }
+        .operation {
+            display: flex;
+            justify-content: flex-end;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 4px 0;
+        }
+        .add-comment {
+            margin-right: 6px;
+        }
+        .more-comment {
+            font-size: 14px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -290,7 +377,115 @@
                 </div>
             </div> -->
             <!-- 评论 -->
+            <div class="comment-wrapper">
+                <div class="input-wrapper">
+                    <textarea class="input" maxlength="300" placeholder="请输入评论内容"></textarea>
+                    <span class="submit">发布</span>
+                </div>
+                <div class="comment-list">
+                    <div class="comment-item">
+                        <div class="top-comment">
+                            <img class="user-avatar" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                            <div class="comment-info">
+                                <div class="user-info">
+                                    <div class="name">用户姓名</div>
+                                    <div class="right">
+                                        <span class="comment-date">6月4日 12:34</span>
+                                        <span>来自海南</span>
+                                    </div>
+                                </div>
+                                <div class="comment">
+                                    尤其是刚上线的产品，很难通过产品的内部体系来实现快速的用户增长，所以会更加依赖于分享来达到广泛的传播，获取目标用户。所以监听用户的截图操作，提示用户进行分享，既缩短了以前分享截图的操作路径，避免了在之前长路径中的行为流失（比如截图完成后忘记分享或觉得麻烦放弃分享等等），也让用户觉得更加贴心。
+                                </div>
+                                <div class="operation">
+                                    <span class="add-comment">评论</span>
+                                    <span>点赞 66</span>
+                                </div>
+                                <div class="more-comment">查看6条回复></div>
+                            </div>
+                        </div>
+                        <div class="top-comment">
+                            <img class="user-avatar" src="https://img.js.design/assets/smartFill/img201164da6ef470.jpg" alt="">
+                            <div class="comment-info">
+                                <div class="user-info">
+                                    <div class="name">用户姓名</div>
+                                    <div class="right">
+                                        <span class="comment-date">6月4日 12:34</span>
+                                        <span>来自海南</span>
+                                    </div>
+                                </div>
+                                <div class="comment">
+                                    尤其是刚上线的产品，很难通过产品的内部体系来实现快速的用户增长，所以会更加依赖于分享来达到广泛的传播，获取目标用户。所以监听用户的截图操作，提示用户进行分享，既缩短了以前分享截图的操作路径，避免了在之前长路径中的行为流失（比如截图完成后忘记分享或觉得麻烦放弃分享等等），也让用户觉得更加贴心。
+                                </div>
+                                <div class="operation">
+                                    <span class="add-comment">评论</span>
+                                    <span>点赞 66</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        let inputDom = document.querySelector('.input-wrapper .input');
+        let hiddenTextarea = null;
+        const HIDDEN_STYLE = `height:0 !important;visibility:hidden !important;overflow:hidden !important;z-index:-999 !important;`
+
+        inputDom.addEventListener('input', function(e) {
+            let target = e.target;
+            if (!hiddenTextarea) {
+                hiddenTextarea = document.createElement('textarea');
+                document.body.appendChild(hiddenTextarea);
+            }
+            const { borderSize, paddingSize, contextStyle } = calculateNodeStyling(this);
+            hiddenTextarea.setAttribute('id', 'hidden-textarea');
+            hiddenTextarea.setAttribute('style', `${contextStyle};${HIDDEN_STYLE}`)
+            hiddenTextarea.value = target.value || target.placeholder || '';
+
+            let height = Math.max(90, hiddenTextarea.scrollHeight + borderSize);
+            inputDom.style.height = height + 'px';
+        });
+        inputDom.addEventListener('blur', function() {
+            hiddenTextarea = null;
+            let hiddenTextareaEle = document.querySelector('#hidden-textarea');
+            if (hiddenTextareaEle) document.body.removeChild(hiddenTextareaEle);
+        });
+
+        const CONTEXT_STYLE = [
+            'letter-spacing',
+            'line-height',
+            'padding-top',
+            'padding-bottom',
+            'font-family',
+            'font-weight',
+            'font-size',
+            'text-rendering',
+            'text-transform',
+            'width',
+            'text-indent',
+            'padding-left',
+            'padding-right',
+            'border-width',
+            'box-sizing',
+        ]
+
+        function calculateNodeStyling(targetElement) {
+            const style = window.getComputedStyle(targetElement)
+            const boxSizing = style.getPropertyValue('box-sizing')
+            const paddingSize =
+                Number.parseFloat(style.getPropertyValue('padding-bottom')) +
+                Number.parseFloat(style.getPropertyValue('padding-top'))
+            const borderSize =
+                Number.parseFloat(style.getPropertyValue('border-bottom-width')) +
+                Number.parseFloat(style.getPropertyValue('border-top-width'))
+            const contextStyle = CONTEXT_STYLE.map(
+                (name) => `${name}:${style.getPropertyValue(name)}`
+            ).join(';')
+            return { contextStyle, paddingSize, borderSize, boxSizing }
+        }
+    </script>
 </body>
 </html>
